@@ -13,10 +13,21 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('prenom');
+            $table->string('nom');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('telephone');
             $table->string('password');
+            $table->string('adress')->nullable();  // Adresse de l'utilisateur
+            $table->string('cni')->nullable();     // Carte d'identité nationale
+            $table->string('permis_conduire')->nullable();  // Permis de conduire
+            $table->string('pays_de_voyage')->nullable();  // Pays de voyage
+            $table->string('region_de_voyage')->nullable();  // Région de voyage
+            $table->string('passeport')->nullable();       // Passeport
+            $table->date('date_de_naissance')->nullable(); // Date de naissance
+            $table->decimal('prix_kg', 8, 2)->nullable();  // Prix par kg (décimal)
+            $table->string('commune')->nullable();         // Commune de résidence
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
