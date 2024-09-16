@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Mail\UserRegisteredMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\RegisterAdminRequest;
-use App\Http\Requests\RegisterGestionnaireRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -24,7 +23,10 @@ class AuthController extends Controller
             'commune' => $request->input('commune'),
         ]);
 
-        $user->assignRole('client');  // Assigner le rôle de client
+        $user->assignRole('client');
+
+        // Envoyer un e-mail de confirmation après la création du compte
+        Mail::to($user->email)->send(new UserRegisteredMail($user));
 
         return response()->json(['message' => 'Client registered successfully'], 201);
     }
@@ -47,7 +49,10 @@ class AuthController extends Controller
             'commune' => $request->input('commune'),
         ]);
 
-        $user->assignRole('GP');  // Assigner le rôle de GP
+        $user->assignRole('GP');
+
+        // Envoyer un e-mail de confirmation après la création du compte
+        Mail::to($user->email)->send(new UserRegisteredMail($user));
 
         return response()->json(['message' => 'GP registered successfully'], 201);
     }
@@ -67,7 +72,10 @@ class AuthController extends Controller
             'commune' => $request->input('commune'),
         ]);
 
-        $user->assignRole('chauffeur');  // Assigner le rôle de chauffeur
+        $user->assignRole('chauffeur');
+
+        // Envoyer un e-mail de confirmation après la création du compte
+        Mail::to($user->email)->send(new UserRegisteredMail($user));
 
         return response()->json(['message' => 'Chauffeur registered successfully'], 201);
     }
@@ -87,15 +95,16 @@ class AuthController extends Controller
             'commune' => $request->input('commune'),
         ]);
 
-        $user->assignRole('livreur');  // Assigner le rôle de livreur
+        $user->assignRole('livreur');
+
+        // Envoyer un e-mail de confirmation après la création du compte
+        Mail::to($user->email)->send(new UserRegisteredMail($user));
 
         return response()->json(['message' => 'Livreur registered successfully'], 201);
     }
 
-
     public function registerAdmin(Request $request)
     {
-        // Créer l'utilisateur admin
         $user = User::create([
             'prenom' => $request->input('prenom'),
             'nom' => $request->input('nom'),
@@ -104,17 +113,16 @@ class AuthController extends Controller
             'password' => Hash::make($request->input('password')),
         ]);
 
-        // Assigner le rôle admin
         $user->assignRole('admin');
+
+        // Envoyer un e-mail de confirmation après la création du compte
+        Mail::to($user->email)->send(new UserRegisteredMail($user));
 
         return response()->json(['message' => 'Admin registered successfully'], 201);
     }
 
-
-
     public function registerGestionnaire(Request $request)
     {
-        // Créer l'utilisateur gestionnaire
         $user = User::create([
             'prenom' => $request->input('prenom'),
             'nom' => $request->input('nom'),
@@ -127,18 +135,16 @@ class AuthController extends Controller
             'commune' => $request->input('commune'),
         ]);
 
-        // Assigner le rôle gestionnaire
         $user->assignRole('gestionnaire');
+
+        // Envoyer un e-mail de confirmation après la création du compte
+        Mail::to($user->email)->send(new UserRegisteredMail($user));
 
         return response()->json(['message' => 'Gestionnaire registered successfully'], 201);
     }
 
-
-
-
     public function login(Request $request)
     {
-        // Valider les données d'entrée
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -146,20 +152,15 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        // Déboguer les informations reçues
         \Log::info('Login attempt:', $credentials);
 
-        // Tenter de se connecter avec les identifiants fournis
         if (!Auth::guard('api')->attempt($credentials)) {
             \Log::info('Login failed for credentials:', $credentials);
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
-        // Récupérer l'utilisateur connecté
         $user = Auth::guard('api')->user();
-
-        // Assigner les rôles à la variable $roles
-        $roles = $user->roles->pluck('name'); // Utilisation de Eloquent pour obtenir les rôles
+        $roles = $user->roles->pluck('name');
 
         return response()->json([
             'message' => 'Login successful',
@@ -167,7 +168,4 @@ class AuthController extends Controller
             'roles' => $roles,
         ]);
     }
-
-
-
 }
