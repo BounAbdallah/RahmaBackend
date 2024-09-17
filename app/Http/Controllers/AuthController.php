@@ -136,12 +136,16 @@ class AuthController extends Controller
         ]);
 
         $user->assignRole('gestionnaire');
+        $user->sendEmailVerificationNotification();
 
         // Envoyer un e-mail de confirmation après la création du compte
         Mail::to($user->email)->send(new UserRegisteredMail($user));
 
         return response()->json(['message' => 'Gestionnaire registered successfully'], 201);
     }
+
+
+
 
     public function login(Request $request)
     {
@@ -160,12 +164,24 @@ class AuthController extends Controller
         }
 
         $user = Auth::guard('api')->user();
+
+        // Vérification si l'email est confirmé
+        if (!$user->hasVerifiedEmail()) {
+            return response()->json([
+                'message' => 'Your email address is not verified. Please check your email for the verification link.',
+            ], 403);
+        }
+
+        // Génération du token API
+        $token = $user->createToken('Personal Access Token')->plainTextToken;
+
         $roles = $user->roles->pluck('name');
 
         return response()->json([
             'message' => 'Login successful',
             'user' => $user,
             'roles' => $roles,
+            'token' => $token, // Ajoute le token à la réponse
         ]);
     }
 }
