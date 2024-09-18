@@ -48,6 +48,7 @@ return new class extends Migration
 
             // Colonnes pour les timestamps 'created_at' et 'updated_at'
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

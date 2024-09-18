@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('description')->nullable(); // Description du contenu ou autres détails
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Clé étrangère pour l'utilisateur qui envoie le colis
             $table->timestamps(); // Colonnes created_at et updated_at
+            $table->softDeletes();
         });
     }
 

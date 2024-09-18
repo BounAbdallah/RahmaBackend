@@ -29,3 +29,32 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/annonces/{id}/restore', [AnnonceController::class, 'restore']);
     Route::delete('/annonces/{id}', [AnnonceController::class, 'destroy']);
 });
+
+
+// Route pour la deconnexion :
+
+
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Route pour la modification du compte utilisateur
+    Route::put('/account/update', [AuthController::class, 'updateAccount'])->name('account.update');
+
+    // Route pour la suppression du compte utilisateur
+    Route::delete('/account/delete', [AuthController::class, 'deleteAccount'])->name('account.delete');
+
+    // Route pour la déconnexion
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/user/archive', [AuthController::class, 'archiveAccount']);
+    Route::post('/user/unarchive', [AuthController::class, 'unarchiveAccount']);
+});
+
+// Route pour la suppression complète du compte (accessible uniquement aux admins)
+Route::middleware(['auth:api', 'role:admin'])->group(function () {
+    Route::delete('/user/delete', [AuthController::class, 'deleteAccount']);
+});
