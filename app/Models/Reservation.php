@@ -10,5 +10,17 @@ class Reservation extends Model
 {
     use HasFactory, SoftDeletes;
 
+
+    protected $table = 'reservation';
     protected $guarded = [];
+
+    public function annonce()
+    {
+        return $this->belongsTo(Annonce::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -11,4 +11,15 @@ class Colis extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
+    }
 }

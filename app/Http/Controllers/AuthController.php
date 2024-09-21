@@ -95,43 +95,34 @@ class AuthController extends Controller
         ];
         $this->createUser($request, $additionalFields, 'gestionnaire');
 
-        // Envoyer un email de vérification
-        // $user->sendEmailVerificationNotification();
-
         return response()->json(['message' => 'Gestionnaire registered successfully'], 201);
     }
 
-    // Login des utilisateurs
+    // Connexion utilisateur
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+        $validator = validator($request->all(), [
+            'email' => 'required|email|string',
+            'password' => 'required|string|min:8',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
         $credentials = $request->only('email', 'password');
+        $token = auth()->attempt($credentials);
 
-        if (!Auth::guard('api')->attempt($credentials)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+        if (!$token) {
+            return response()->json(['message' => 'Information de connexion incorrectes'], 401);
         }
-
-        $user = Auth::guard('api')->user();
-
-        if (!$user->hasVerifiedEmail()) {
-            return response()->json([
-                'message' => 'Your email address is not verified. Please check your email for the verification link.',
-            ], 403);
-        }
-
-        // Générer le token API
-        $token = $user->createToken('Personal Access Token')->plainTextToken;
-        $roles = $user->roles->pluck('name');
 
         return response()->json([
-            'message' => 'Login successful',
-            'user' => $user,
-            'roles' => $roles,
-            'token' => $token,
+            "access_token" => $token,
+            "token_type" => "bearer",
+            "user" => auth()->user(),
+            "role" => auth()->user()->roles[0]->name,
+            "expires_in" => env("JWT_TTL") * 60 . 'seconds'
         ]);
     }
 
@@ -140,7 +131,6 @@ class AuthController extends Controller
     {
         $user = Auth::user();
 
-        // Validation des champs
         $request->validate([
             'prenom' => 'sometimes|string|max:255',
             'nom' => 'sometimes|string|max:255',
@@ -151,10 +141,8 @@ class AuthController extends Controller
             'commune' => 'sometimes|string|max:255',
         ]);
 
-        // Mise à jour des informations de l'utilisateur
         $user->update($request->only('prenom', 'nom', 'email', 'telephone', 'adress', 'commune'));
 
-        // Mise à jour du mot de passe si fourni
         if ($request->filled('password')) {
             $user->update(['password' => Hash::make($request->input('password'))]);
         }
@@ -162,36 +150,30 @@ class AuthController extends Controller
         return response()->json(['message' => 'Account updated successfully']);
     }
 
-    // Suppression du compte utilisateur (archivage)
+    // Archivage du compte utilisateur
     public function archiveAccount()
     {
         $user = Auth::user();
-
-        // Archiver le compte de l'utilisateur
         $user->archive();
 
         return response()->json(['message' => 'Account archived successfully']);
     }
 
-    // Restauration du compte utilisateur (dé-archivage)
+    // Restauration du compte utilisateur
     public function unarchiveAccount()
     {
         $user = Auth::user();
-
-        // Restaurer le compte de l'utilisateur
         $user->unarchive();
 
         return response()->json(['message' => 'Account unarchived successfully']);
     }
 
-    // Suppression complète du compte utilisateur (accessible uniquement aux admins)
+    // Suppression complète du compte utilisateur (par un admin)
     public function deleteAccount(Request $request)
     {
         $user = Auth::user();
 
-        // Vérifier si l'utilisateur est un admin
         if ($user->hasRole('admin')) {
-            // Suppression complète du compte utilisateur
             $user->forceDelete();
             return response()->json(['message' => 'Account deleted permanently']);
         }
@@ -199,23 +181,10 @@ class AuthController extends Controller
         return response()->json(['message' => 'Unauthorized'], 403);
     }
 
-    // Déconnexion des utilisateurs
-    public function logout(Request $request)
+    // Déconnexion utilisateur
+    public function logout()
     {
-        // Récupère l'utilisateur authentifié
-        $user = Auth::guard('api')->user();
-
-        if ($user) {
-            // Révoque tous les tokens de l'utilisateur (déconnexion complète)
-            $user->tokens()->delete();
-
-            return response()->json([
-                'message' => 'Deconnexion reussi avec succès !😉'
-            ], 200);
-        }
-
-        return response()->json([
-            'message' => "Aucun utilisateur n'est connecté ❌!"
-        ], 401);
+        auth()->logout();
+        return response()->json(['message' => 'Déconnexion réussie']);
     }
 }

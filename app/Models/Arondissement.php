@@ -9,5 +9,7 @@ class Arondissement extends Model
 {
     use HasFactory;
 
+    protected $table = 'arrondissements';
+
     protected $guarded = [];
 }

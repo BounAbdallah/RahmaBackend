@@ -11,18 +11,18 @@ class StoreTarifRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // Vous pouvez ajouter des logiques d'autorisation ici
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'sommes' => 'required|numeric|min:0',
+            'description' => 'nullable|string',
+            'zone_livraison_id' => 'required|exists:zone_livraisons,id',
         ];
     }
 }

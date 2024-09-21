@@ -11,18 +11,19 @@ class StoreZoneLivraisonRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // Assure-toi que la gestion des autorisations est en place
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'libelle' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'arrondissement_id' => 'required|exists:arrondissements,id', // Assure-toi que l'arrondissement existe
+            'arrondissement2_id' => 'required|exists:arrondissements,id', // Assure-toi que l'arrondissement existe
         ];
     }
 }
