@@ -26,13 +26,34 @@ class RolesAndPermissionsSeeder extends Seeder
             'réserver une voiture',
             'faire une demande de livraison locale',
             'ajouter un tarif',
-                // Permissions spécifiques pour les clients
+            'voir la liste des utilisateurs',
+
+            // Nouvelles permissions spécifiques aux routes d'admin
+            'voir les statistiques des utilisateurs',
+            'créer un utilisateur',
+            'mettre à jour un utilisateur',
+            'supprimer un utilisateur',
+            'archiver un utilisateur',
+            'désarchiver un utilisateur',
+            'créer un rôle',
+            'créer une permission',
+            'assigner des permissions à des rôles',
+            'voir les rôles et permissions',
+
+            // Permissions spécifiques pour les clients
             'ajouter un colis',
             'modifier un colis',
             'supprimer un colis',
             'archiver un colis',
             'réserver à une annonce',
 
+
+            'voir son tableau de bord',
+    'modifier un colis',
+    'archiver un colis',
+    'désarchiver un colis',
+    'modifier une réservation',
+    'modifier une livraison',
             // Permissions spécifiques pour les chauffeurs
             'accepter réservations annonces',
             'refuser réservations annonces',
@@ -41,6 +62,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'voir les détails des colis des clients',
             'archiver les colis des clients',
         ];
+
 
         // Créer toutes les permissions si elles n'existent pas déjà
         foreach ($permissions as $permission) {
@@ -73,7 +95,22 @@ class RolesAndPermissionsSeeder extends Seeder
                 'refuser réservations annonces',
                 'voir les détails des colis des clients',
                 'archiver les colis des clients',
+                'voir la liste des utilisateurs',
+
+                // Nouvelles permissions pour l'admin
+                'voir les statistiques des utilisateurs',
+                'créer un utilisateur',
+                'mettre à jour un utilisateur',
+                'supprimer un utilisateur',
+                'archiver un utilisateur',
+                'désarchiver un utilisateur',
+                'créer un rôle',
+                'créer une permission',
+                'assigner des permissions à des rôles',
+                'voir les rôles et permissions',
+
             ],
+
             'Gestionnaire' => [
                 'gérer les utilisateurs',
                 'attribuer des livraisons',
@@ -126,6 +163,16 @@ class RolesAndPermissionsSeeder extends Seeder
                 'archiver un colis',
                 'réserver à une annonce',
                 'creer une livraison',
+                'voir son tableau de bord',
+        'ajouter un colis',
+        'modifier un colis',
+        'supprimer un colis',
+        'archiver un colis',
+        'désarchiver un colis',
+        'réserver à une annonce',
+        'modifier une réservation',
+        'modifier une livraison',
+        'creer une livraison',
             ],
         ];
 

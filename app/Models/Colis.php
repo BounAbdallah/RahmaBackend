@@ -22,4 +22,10 @@ class Colis extends Model
     {
         return $this->belongsTo(Reservation::class);
     }
+
+
+    public function paiement()
+    {
+        return $this->belongsTo(Paiement::class);
+    }
 }

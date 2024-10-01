@@ -8,12 +8,32 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
-    // Méthode générique pour créer un utilisateur
+    // Méthode générique pour créer un utilisateur avec gestion d'image
     private function createUser(Request $request, array $additionalFields, string $role)
     {
+        // Validation de l'image (optionnel)
+        $request->validate([
+            'photo_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Gestion de l'upload d'image
+        $imagePath = null;
+        if ($request->hasFile('photo_profil')) {
+            // Sauvegarde l'image dans le répertoire "public/images"
+            $imagePath = $request->file('photo_profil')->store('photo_profil', 'public');
+        } else {
+            // Définit l'image par défaut si aucune image n'est fournie
+            $imagePath = 'https://via.placeholder.com/150';
+        }
+
+        // Déterminer le statut en fonction du rôle
+        $status = ($role === 'client') ? 'actif' : 'en attente';
+
+        // Fusionner les champs de base et les champs supplémentaires
         $userData = array_merge([
             'prenom' => $request->input('prenom'),
             'nom' => $request->input('nom'),
@@ -22,8 +42,11 @@ class AuthController extends Controller
             'password' => Hash::make($request->input('password')),
             'adress' => $request->input('adress'),
             'commune' => $request->input('commune'),
+            'photo_profil' => $imagePath, // Ajout du chemin de l'image dans les données utilisateur
+            'statut' => $status, // Ajout du statut
         ], $additionalFields);
 
+        // Création de l'utilisateur
         $user = User::create($userData);
         $user->assignRole($role);
 
@@ -122,15 +145,16 @@ class AuthController extends Controller
             "token_type" => "bearer",
             "user" => auth()->user(),
             "role" => auth()->user()->roles[0]->name,
-            "expires_in" => env("JWT_TTL") * 60 . 'seconds'
+            "expires_in" => env("JWT_TTL") * 60 . ' seconds'
         ]);
     }
 
-    // Modification du compte utilisateur
+    // Modification du compte utilisateur avec gestion d'image
     public function updateAccount(Request $request)
     {
         $user = Auth::user();
 
+        // Validation des données
         $request->validate([
             'prenom' => 'sometimes|string|max:255',
             'nom' => 'sometimes|string|max:255',
@@ -139,8 +163,22 @@ class AuthController extends Controller
             'password' => 'sometimes|min:8|confirmed',
             'adress' => 'sometimes|string|max:255',
             'commune' => 'sometimes|string|max:255',
+            'photo_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        // Gestion de l'image
+        if ($request->hasFile('photo_profil')) {
+            // Supprimer l'ancienne image si elle existe
+            if ($user->photo_profil) {
+                Storage::disk('public')->delete($user->photo_profil);
+            }
+
+            // Sauvegarder la nouvelle image
+            $imagePath = $request->file('photo_profil')->store('photo_profil', 'public');
+            $user->update(['photo_profil' => $imagePath]);
+        }
+
+        // Mise à jour des autres informations
         $user->update($request->only('prenom', 'nom', 'email', 'telephone', 'adress', 'commune'));
 
         if ($request->filled('password')) {

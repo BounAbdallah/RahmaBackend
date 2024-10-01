@@ -17,6 +17,8 @@ class RegisterClientRequest extends FormRequest
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'photo_profil' => 'nullable|string|max:255', // Ajout du champ image
+
             'telephone' => 'required|string|max:15',
             'password' => 'required|string|min:6',
             'adress' => 'nullable|string|max:255',

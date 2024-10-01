@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -18,7 +17,7 @@ class ColisController extends Controller
         return response()->json($colis);
     }
 
-    // Créer un nouveau colis (seulement les utilisateurs avec le rôle 'Client' peuvent le faire)
+    // Créer un nouveau colis (seulement les utilisateurs avec les rôles 'Client', 'GP', 'Admin', ou 'Gestionnaire' peuvent le faire)
     public function store(Request $request)
     {
         $user = Auth::user();
@@ -28,8 +27,8 @@ class ColisController extends Controller
             return response()->json(['message' => 'not authenticated'], 403);
         }
 
-        // Vérification de rôle avec Spatie : Seuls les rôles "Client" et "GP" peuvent ajouter
-        if (!$user->hasAnyRole(['Client', 'GP', 'Gestionnaire'])) {
+        // Vérification de rôle
+        if (!$user->hasAnyRole(['Client', 'GP', 'Admin', 'Gestionnaire'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -48,7 +47,7 @@ class ColisController extends Controller
 
         // Création du colis
         $colis = Colis::create([
-            'user_id' => $user->id,  // Relier le colis à l'utilisateur authentifié
+            'user_id' => $user->id,
             'titre' => $request->titre,
             'poids_kg' => $request->poids_kg,
             'adresse_expediteur' => $request->adresse_expediteur,
@@ -63,18 +62,17 @@ class ColisController extends Controller
         return response()->json($colis, 201);
     }
 
-
     // Afficher les détails d'un colis spécifique
     public function show(Colis $colis)
     {
         return response()->json($colis);
     }
 
-    // Mettre à jour un colis (seulement les utilisateurs avec les rôles 'Chauffeur' ou 'GP' peuvent modifier)
+    // Mettre à jour un colis (seulement les utilisateurs avec les rôles 'Client', 'GP', 'Admin' ou 'Gestionnaire' peuvent modifier)
     public function update(Request $request, Colis $colis)
     {
         // Vérification de rôle
-        if (!Auth::user()->hasAnyRole(['Chauffeur', 'GP'])) {
+        if (!Auth::user()->hasAnyRole(['Client', 'GP', 'Admin', 'Gestionnaire'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -94,22 +92,41 @@ class ColisController extends Controller
         return response()->json($colis);
     }
 
-    // Supprimer un colis (seulement les utilisateurs qui ont créé le colis ou un 'Chauffeur' peuvent supprimer)
-    public function destroy(Colis $colis)
+    // Archiver un colis (seulement les utilisateurs avec les rôles 'Client', 'GP', 'Admin', ou 'Gestionnaire' peuvent archiver)
+    public function archive(Colis $colis)
     {
-        // Vérification de rôle ou du propriétaire du colis
-        if (Auth::id() !== $colis->user_id && !Auth::user()->hasRole('Chauffeur')) {
+        // Vérification de rôle
+        if (!Auth::user()->hasAnyRole(['Client', 'GP', 'Admin', 'Gestionnaire'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $colis->delete();
-        return response()->json(['message' => 'Colis archived']);
+        // Archiver le colis (vous pouvez ajouter votre logique ici pour changer le statut)
+        $colis->statut = 'archivé'; // Exemples de statut, à adapter selon votre logique
+        $colis->save();
+
+        return response()->json(['message' => 'Colis archived successfully']);
     }
 
-    // Supprimer définitivement un colis (seulement les utilisateurs avec le rôle 'Admin' ou le créateur peuvent faire cela)
-    public function forceDelete(Colis $colis)
+    // Désarchiver un colis (seulement les utilisateurs avec les rôles 'Client', 'GP', 'Admin', ou 'Gestionnaire' peuvent désarchiver)
+    public function unarchive(Colis $colis)
     {
-        if (Auth::id() !== $colis->user_id && !Auth::user()->hasRole('Admin')) {
+        // Vérification de rôle
+        if (!Auth::user()->hasAnyRole(['Client', 'GP', 'Admin', 'Gestionnaire'])) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        // Désarchiver le colis (vous pouvez ajouter votre logique ici pour changer le statut)
+        $colis->statut = 'en attente'; // Exemples de statut, à adapter selon votre logique
+        $colis->save();
+
+        return response()->json(['message' => 'Colis unarchived successfully']);
+    }
+
+    // Supprimer définitivement un colis (seulement les utilisateurs avec le rôle 'Admin' peuvent faire cela)
+    public function destroy(Colis $colis)
+    {
+        // Vérification de rôle
+        if (!Auth::user()->hasRole('Admin')) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

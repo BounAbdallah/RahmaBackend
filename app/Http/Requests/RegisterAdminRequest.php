@@ -20,6 +20,8 @@ class RegisterAdminRequest extends FormRequest
             'email' => 'required|email|unique:users',
             'telephone' => 'required|string|max:15',
             'password' => 'required|string|min:6|confirmed',  // Attend 'password_confirmation'
+            'photo_profil' => 'nullable|string|max:255',// Ajout du champ image
+
         ];
     }
 }
