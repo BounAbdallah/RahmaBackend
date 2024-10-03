@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ColisController extends Controller
 {
-    // Afficher une liste des colis
+    // Afficher une liste des colis pour l'utilisateur authentifié
     public function index()
     {
-        // Permet à tout utilisateur authentifié de voir les colis
-        $colis = Colis::all();
+        $user = Auth::user();
+        // Récupérer uniquement les colis créés par l'utilisateur connecté
+        $colis = Colis::where('user_id', $user->id)->get();
         return response()->json($colis);
     }
 
@@ -22,12 +23,10 @@ class ColisController extends Controller
     {
         $user = Auth::user();
 
-        // Vérifier si l'utilisateur est authentifié
         if (!$user) {
-            return response()->json(['message' => 'not authenticated'], 403);
+            return response()->json(['message' => 'Not authenticated'], 403);
         }
 
-        // Vérification de rôle
         if (!$user->hasAnyRole(['Client', 'GP', 'Admin', 'Gestionnaire'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
@@ -47,7 +46,7 @@ class ColisController extends Controller
 
         // Création du colis
         $colis = Colis::create([
-            'user_id' => $user->id,
+            'user_id' => $user->id, // Associer l'utilisateur connecté
             'titre' => $request->titre,
             'poids_kg' => $request->poids_kg,
             'adresse_expediteur' => $request->adresse_expediteur,
@@ -62,17 +61,24 @@ class ColisController extends Controller
         return response()->json($colis, 201);
     }
 
-    // Afficher les détails d'un colis spécifique
+    // Afficher les détails d'un colis spécifique, uniquement si l'utilisateur est le créateur
     public function show(Colis $colis)
     {
+        $user = Auth::user();
+
+        if ($colis->user_id !== $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         return response()->json($colis);
     }
 
-    // Mettre à jour un colis (seulement les utilisateurs avec les rôles 'Client', 'GP', 'Admin' ou 'Gestionnaire' peuvent modifier)
+    // Mettre à jour un colis, uniquement si l'utilisateur est le créateur
     public function update(Request $request, Colis $colis)
     {
-        // Vérification de rôle
-        if (!Auth::user()->hasAnyRole(['Client', 'GP', 'Admin', 'Gestionnaire'])) {
+        $user = Auth::user();
+
+        if ($colis->user_id !== $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -92,41 +98,44 @@ class ColisController extends Controller
         return response()->json($colis);
     }
 
-    // Archiver un colis (seulement les utilisateurs avec les rôles 'Client', 'GP', 'Admin', ou 'Gestionnaire' peuvent archiver)
+    // Archiver un colis, uniquement si l'utilisateur est le créateur
     public function archive(Colis $colis)
     {
-        // Vérification de rôle
-        if (!Auth::user()->hasAnyRole(['Client', 'GP', 'Admin', 'Gestionnaire'])) {
+        $user = Auth::user();
+
+        if ($colis->user_id !== $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        // Archiver le colis (vous pouvez ajouter votre logique ici pour changer le statut)
-        $colis->statut = 'archivé'; // Exemples de statut, à adapter selon votre logique
+        // Archiver le colis
+        $colis->etat = 'archivé';
         $colis->save();
 
         return response()->json(['message' => 'Colis archived successfully']);
     }
 
-    // Désarchiver un colis (seulement les utilisateurs avec les rôles 'Client', 'GP', 'Admin', ou 'Gestionnaire' peuvent désarchiver)
+    // Désarchiver un colis, uniquement si l'utilisateur est le créateur
     public function unarchive(Colis $colis)
     {
-        // Vérification de rôle
-        if (!Auth::user()->hasAnyRole(['Client', 'GP', 'Admin', 'Gestionnaire'])) {
+        $user = Auth::user();
+
+        if ($colis->user_id !== $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        // Désarchiver le colis (vous pouvez ajouter votre logique ici pour changer le statut)
-        $colis->statut = 'en attente'; // Exemples de statut, à adapter selon votre logique
+        // Désarchiver le colis
+        $colis->etat = 'desarchivé';
         $colis->save();
 
         return response()->json(['message' => 'Colis unarchived successfully']);
     }
 
-    // Supprimer définitivement un colis (seulement les utilisateurs avec le rôle 'Admin' peuvent faire cela)
+    // Supprimer définitivement un colis, uniquement si l'utilisateur est le créateur ou un administrateur
     public function destroy(Colis $colis)
     {
-        // Vérification de rôle
-        if (!Auth::user()->hasRole('Admin')) {
+        $user = Auth::user();
+
+        if ($colis->user_id !== $user->id && !$user->hasRole('Admin')) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

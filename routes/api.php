@@ -2,11 +2,13 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\GestionRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardAdmin;
-use App\Http\Controllers\TarifController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TarifController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\Api\ColisController;
 use App\Http\Controllers\LivraisonController;
@@ -14,7 +16,6 @@ use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserMangementController;
 use App\Http\Controllers\ZoneLivraisonController;
-use App\Http\Controllers\GestionRole;
 
 // Routes publiques
 Route::middleware('api')->group(function () {
@@ -37,11 +38,16 @@ Route::middleware('auth:sanctum')->group(function () {
 // Routes protégées par auth:api
 Route::middleware('auth:api')->group(function () {
     // Gestion du compte utilisateur
-    Route::put('/account/update', [AuthController::class, 'updateAccount'])->name('account.update');
+    Route::patch('/account/update', [AuthController::class, 'updateAccount'])->name('account.update');
     Route::delete('/account/delete', [AuthController::class, 'deleteAccount'])->name('account.delete');
     Route::post('/user/archive', [AuthController::class, 'archiveAccount']);
     Route::post('/user/unarchive', [AuthController::class, 'unarchiveAccount']);
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+    Route::get('/profil', [ProfilController::class, 'afficherProfil']); // Afficher le profil
+    Route::post('/profil/modifier', [ProfilController::class, 'modifierProfil']); // Modifier le profil
+
 });
 
 // Routes pour la suppression complète du compte (accessible aux admins)
@@ -56,7 +62,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/', [ColisController::class, 'store']);
         Route::get('/{colis}', [ColisController::class, 'show']);
         Route::put('/{colis}', [ColisController::class, 'update']);
-        Route::delete('/{colis}', [ColisController::class, 'destroy']);
+        Route::delete('/{colis}', [ColisController::class, 'archive']);
         Route::delete('/force-delete/{colis}', [ColisController::class, 'forceDelete']);
     });
 });

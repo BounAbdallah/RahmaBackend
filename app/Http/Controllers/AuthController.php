@@ -191,8 +191,14 @@ class AuthController extends Controller
     // Archivage du compte utilisateur
     public function archiveAccount()
     {
+        // Récupérer l'utilisateur authentifié
         $user = Auth::user();
-        $user->archive();
+
+        // Mettre à jour l'état de l'utilisateur
+        $user->etat = 'archivé';
+
+        // Enregistrer les modifications
+        $user->save();
 
         return response()->json(['message' => 'Account archived successfully']);
     }
@@ -200,8 +206,14 @@ class AuthController extends Controller
     // Restauration du compte utilisateur
     public function unarchiveAccount()
     {
+        // Récupérer l'utilisateur authentifié
         $user = Auth::user();
-        $user->unarchive();
+
+        // Mettre à jour l'état de l'utilisateur
+        $user->etat = 'désarchivé'; // Remarquez le changement de 'desarchivé' à 'désarchivé'
+
+        // Enregistrer les modifications
+        $user->save();
 
         return response()->json(['message' => 'Account unarchived successfully']);
     }
