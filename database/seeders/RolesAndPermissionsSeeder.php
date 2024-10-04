@@ -52,8 +52,11 @@ class RolesAndPermissionsSeeder extends Seeder
     'modifier un colis',
     'archiver un colis',
     'désarchiver un colis',
+    'supprimer un colis',
     'modifier une réservation',
     'modifier une livraison',
+    'Afficher son profil',
+    'Modifier son profil',
             // Permissions spécifiques pour les chauffeurs
             'accepter réservations annonces',
             'refuser réservations annonces',
@@ -108,6 +111,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'créer une permission',
                 'assigner des permissions à des rôles',
                 'voir les rôles et permissions',
+                'Afficher son profil',
+                'Modifier son profil',
 
             ],
 
@@ -122,6 +127,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'supprimer un colis',
                 'archiver un colis',
                 'creer une livraison',
+                'Afficher son profil',
+                'Modifier son profil',
             ],
             'Chauffeur' => [
                 'créer des annonces',
@@ -132,6 +139,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'archiver un colis',
                 'accepter réservations annonces',
                 'refuser réservations annonces',
+                'Afficher son profil',
+                'Modifier son profil',
             ],
             'Livreur' => [
                 'attribuer des livraisons',
@@ -140,6 +149,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'modifier un colis',
                 'supprimer un colis',
                 'archiver un colis',
+                'Afficher son profil',
+                'Modifier son profil',
             ],
             'GP' => [
                 'créer des annonces',
@@ -150,6 +161,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'archiver un colis',
                 'voir les détails des colis des clients',
                 'archiver les colis des clients',
+                'Afficher son profil',
+                'Modifier son profil',
             ],
             'Client' => [
                 'réserver des KG',
@@ -173,6 +186,8 @@ class RolesAndPermissionsSeeder extends Seeder
         'modifier une réservation',
         'modifier une livraison',
         'creer une livraison',
+        'Afficher son profil',
+        'Modifier son profil',
             ],
         ];
 

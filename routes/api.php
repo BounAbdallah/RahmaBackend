@@ -88,6 +88,19 @@ Route::middleware(['auth:api', 'role:Gestionnaire'])->group(function () {
     Route::delete('/annonces/{id}', [AnnonceController::class, 'destroy']);
 });
 
+
+// Routes spécifiques pour le rôle GP
+Route::middleware(['auth:api', 'role:GP'])->group(function () {
+    // Routes pour les annonces
+    Route::get('/ListAnnonces', [AnnonceController::class, 'index']);
+    Route::post('/CreationAnnonces', [AnnonceController::class, 'store']);
+    Route::get('/DetailsAnnonces/{id}', [AnnonceController::class, 'show']);
+    Route::put('/ModificationAnnonces/{id}', [AnnonceController::class, 'update']);
+    Route::delete('/ArchiverAnnonces/{id}/archive', [AnnonceController::class, 'destroy']);
+    Route::post('/RestorerAnnonces/{id}/restore', [AnnonceController::class, 'restore']);
+    Route::delete('/SupprimerAnnonces/{id}', [AnnonceController::class, 'destroy']);
+});
+
 // Routes pour les tarifs
 Route::apiResource('tarifs', TarifController::class);
 
@@ -116,10 +129,10 @@ Route::middleware(['auth:api', 'role:Admin'])->group(function () {
     Route::delete('/tarifs/{tarif}', [DashboardAdmin::class, 'deleteTarif'])->name('admin.tarifs.delete');
 
     // Gestion des Annonces
-    Route::get('/annonces', [DashboardAdmin::class, 'listAnnonces'])->name('admin.annonces.list');
-    Route::post('/annonces', [DashboardAdmin::class, 'createAnnonce'])->name('admin.annonces.create');
-    Route::put('/annonces/{id}', [DashboardAdmin::class, 'updateAnnonce'])->name('admin.annonces.update');
-    Route::delete('/annonces/{id}', [DashboardAdmin::class, 'deleteAnnonce'])->name('admin.annonces.delete');
+    // Route::get('/annonces', [DashboardAdmin::class, 'listAnnonces'])->name('admin.annonces.list');
+    // Route::post('/annonces', [DashboardAdmin::class, 'createAnnonce'])->name('admin.annonces.create');
+    // Route::put('/annonces/{id}', [DashboardAdmin::class, 'updateAnnonce'])->name('admin.annonces.update');
+    // Route::delete('/annonces/{id}', [DashboardAdmin::class, 'deleteAnnonce'])->name('admin.annonces.delete');
 
     // Gestion des Livraisons
     Route::get('/livraisons', [DashboardAdmin::class, 'listLivraisons'])->name('admin.livraisons.list');
