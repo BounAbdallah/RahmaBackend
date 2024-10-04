@@ -92,7 +92,7 @@ Route::middleware(['auth:api', 'role:Gestionnaire'])->group(function () {
 // Routes spécifiques pour le rôle GP
 Route::middleware(['auth:api', 'role:GP'])->group(function () {
     // Routes pour les annonces
-    Route::get('/ListAnnonces', [AnnonceController::class, 'index']);
+    Route::get('/ListeAnnonces', [AnnonceController::class, 'index']);
     Route::post('/CreationAnnonces', [AnnonceController::class, 'store']);
     Route::get('/DetailsAnnonces/{id}', [AnnonceController::class, 'show']);
     Route::put('/ModificationAnnonces/{id}', [AnnonceController::class, 'update']);
