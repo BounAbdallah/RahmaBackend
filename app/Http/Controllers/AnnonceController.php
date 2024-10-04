@@ -18,6 +18,10 @@ class AnnonceController extends Controller
         $annonces = Annonce::all();
         return response()->json($annonces);
     }
+    public function annoceDisponible(){
+        $annonces = Annonce::where('statut', 'active')->get();
+        return response()->json($annonces);
+    }
 
     public function show($id)
     {

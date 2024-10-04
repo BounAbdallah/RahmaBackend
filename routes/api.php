@@ -100,6 +100,10 @@ Route::middleware(['auth:api', 'role:GP'])->group(function () {
     Route::post('/RestorerAnnonces/{id}/restore', [AnnonceController::class, 'restore']);
     Route::delete('/SupprimerAnnonces/{id}', [AnnonceController::class, 'destroy']);
 });
+// Liste des annonce des GP disponible
+
+Route::get('/GpDisponible', [AnnonceController::class, 'annoceDisponible']);
+
 
 // Routes pour les tarifs
 Route::apiResource('tarifs', TarifController::class);
