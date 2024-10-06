@@ -23,6 +23,11 @@ class AnnonceController extends Controller
         return response()->json($annonces);
     }
 
+    public function detailAnnonceDisponible($id){
+        $annonces = Annonce::where('statut', 'active')->where('id', $id)->get();
+        return response()->json($annonces);
+    }
+
     public function show($id)
     {
         $annonce = Annonce::findOrFail($id);
@@ -43,10 +48,13 @@ class AnnonceController extends Controller
             'poids_kg' => 'required|numeric',
         ]);
 
-        $validatedData['createur'] = Auth::id();
+        $validatedData['createur'] = Auth::user()->id;
         $annonce = Annonce::create($validatedData);
 
-        return response()->json($annonce, 201);
+        return response()->json([
+        "Annonce" => $annonce,
+        "Createur" => $annonce->createur
+        ],201);
     }
 
     public function update(Request $request, $id)

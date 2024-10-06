@@ -103,7 +103,7 @@ Route::middleware(['auth:api', 'role:GP'])->group(function () {
 // Liste des annonce des GP disponible
 
 Route::get('/GpDisponible', [AnnonceController::class, 'annoceDisponible']);
-
+Route::get('/detailsAnnoceGP/{id}', [AnnonceController::class, 'detailAnnonceDisponible']);
 
 // Routes pour les tarifs
 Route::apiResource('tarifs', TarifController::class);
@@ -145,10 +145,10 @@ Route::middleware(['auth:api', 'role:Admin'])->group(function () {
     Route::delete('/livraisons/{id}', [DashboardAdmin::class, 'deleteLivraison'])->name('admin.livraisons.delete');
 
     // Gestion des Réservations
-    Route::get('/reservations', [DashboardAdmin::class, 'listReservations'])->name('admin.reservations.list');
-    Route::post('/reservations', [DashboardAdmin::class, 'createReservation'])->name('admin.reservations.create');
-    Route::put('/reservations/{id}', [DashboardAdmin::class, 'updateReservation'])->name('admin.reservations.update');
-    Route::delete('/reservations/{id}', [DashboardAdmin::class, 'deleteReservation'])->name('admin.reservations.delete');
+    Route::get('/admin/reservations', [DashboardAdmin::class, 'listReservations'])->name('admin.reservations.list');
+    Route::post('/admin/reservations', [DashboardAdmin::class, 'createReservation'])->name('admin.reservations.create');
+    Route::put('/admin/reservations/{id}', [DashboardAdmin::class, 'updateReservation'])->name('admin.reservations.update');
+    Route::delete('/admin/reservations/{id}', [DashboardAdmin::class, 'deleteReservation'])->name('admin.reservations.delete');
 });
 
 // Routes spécifiques pour le rôle Client

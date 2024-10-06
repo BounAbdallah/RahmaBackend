@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('photo_profil')
+        Schema::table('annonces', function (Blueprint $table) {
+            $table->string('photo_pays_voyage_provenance')
                   ->default('https://via.placeholder.com/150')
                   ->nullable()
-                  ->after('email'); // Ajouter le champ après l'email
+                  ->after('titre');
+            $table->string('photo_pays_voyage_destination')
+                  ->default('https://via.placeholder.com/150')
+                  ->nullable()
+                  ->after('photo_pays_voyage_provenance');
         });
     }
 
@@ -24,8 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('photo_profil');
+        Schema::table('annonces', function (Blueprint $table) {
+            //
         });
     }
 };

@@ -15,8 +15,8 @@ class ZoneLivraisonController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $zonesLivraison = ZoneLivraison::all(); // Récupère toutes les zones
+    {   // Récupère toutes les zones
+        $zonesLivraison = ZoneLivraison::all();
         return response()->json($zonesLivraison);
     }
 
