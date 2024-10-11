@@ -12,18 +12,19 @@ class Colis extends Model
 
     protected $guarded = [];
 
-
+    // Relation : Un colis appartient à un utilisateur
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    // Relation : Un colis appartient à une réservation
     public function reservation()
     {
         return $this->belongsTo(Reservation::class);
     }
 
-
+    // Relation : Un colis peut être lié à un paiement
     public function paiement()
     {
         return $this->belongsTo(Paiement::class);

@@ -16,4 +16,9 @@ class Annonce extends Model
     {
         return $this->belongsTo(User::class, 'createur');
     }
+
+    public function colis()
+{
+    return $this->hasMany(Colis::class);
+}
 }
