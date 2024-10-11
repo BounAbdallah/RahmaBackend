@@ -3,6 +3,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\GestionRole;
+use App\Http\Controllers\GPDashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardAdmin;
@@ -13,6 +14,7 @@ use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\Api\ColisController;
 use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\DashboardGPController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserMangementController;
 use App\Http\Controllers\ZoneLivraisonController;
@@ -69,7 +71,10 @@ Route::middleware('auth:api')->group(function () {
 
 // Routes pour les réservations
 Route::apiResource('reservations', ReservationController::class);
-Route::post('reservations/{id}/status', [ReservationController::class, 'updateStatus']);
+
+Route::post('reservations', [ReservationController::class , 'store']);
+
+// Route::post('reservations/{id}/status', [ReservationController::class, 'updateStatus']);
 
 // Routes pour la gestion des livraisons
 Route::middleware('auth:api')->group(function () {
@@ -151,6 +156,8 @@ Route::middleware(['auth:api', 'role:Admin'])->group(function () {
     Route::delete('/admin/reservations/{id}', [DashboardAdmin::class, 'deleteReservation'])->name('admin.reservations.delete');
 });
 
+
+
 // Routes spécifiques pour le rôle Client
 Route::middleware(['auth:api', 'role:Client'])->group(function () {
     Route::get('/client/dashboard', [ClientController::class, 'dashboard']);
@@ -164,4 +171,31 @@ Route::middleware(['auth:api', 'role:Client'])->group(function () {
 // Routes spécifiques pour la gestion des livraisons par les clients
 Route::middleware(['auth:api', 'role:Client'])->group(function () {
     Route::apiResource('livraisons', LivraisonController::class);
+});
+
+Route::middleware(['auth:api', 'role:GP'])->group(function () {
+    // Route pour afficher les annonces du GP connecté
+    Route::get('/gp/mes-annonces', [DashboardGPController::class, 'mesAnnonces']);
+
+    // Route pour afficher les réservations liées aux annonces du GP
+    Route::get('/gp/mes-reservations', [DashboardGPController::class, 'mesReservations']);
+
+    // Route pour afficher les détails des colis liés à une annonce
+    Route::get('/gp/colis/annonce/{id}', [DashboardGPController::class, 'detailsColisPourAnnonce']);
+
+    // Route pour afficher les statistiques (annonces, réservations, colis)
+    Route::get('/gp/statistiques', [DashboardGPController::class, 'statistiques']);
+
+    Route::get('/gp/annonce/{id}/colis', [DashboardGPController::class, 'colisParAnnonce'])->middleware('auth');
+
+    Route::patch('/reservation/{id}/changer-statut', [DashboardGPController::class, 'changerStatutReservation']);
+
+    Route::get('/annonces', [AnnonceController::class, 'index']);
+    Route::post('/gp/annonces', [AnnonceController::class, 'store']);
+    Route::get('/annonces/{id}', [AnnonceController::class, 'show']);
+    Route::put('/annonces/{id}', [AnnonceController::class, 'update']);
+    Route::delete('/annonces/{id}/archive', [AnnonceController::class, 'destroy']);
+    Route::post('/annonces/{id}/restore', [AnnonceController::class, 'restore']);
+    Route::delete('/annonces/{id}', [AnnonceController::class, 'destroy']);
+
 });
