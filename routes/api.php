@@ -77,7 +77,7 @@ Route::apiResource('reservations', ReservationController::class);
 
 Route::post('reservations', [ReservationController::class , 'store']);
 
-// Route::post('reservations/{id}/status', [ReservationController::class, 'updateStatus']);
+Route::post('reservations/{id}/status', [ReservationController::class, 'updateStatus']);
 
 // Routes pour la gestion des livraisons
 Route::middleware('auth:api')->group(function () {

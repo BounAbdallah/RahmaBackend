@@ -11,7 +11,9 @@ use App\Mail\ReservationCreatedMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReservationStatusChangedMail;
+use App\Mail\UserReservationStatusChangedMail;
 use App\Notifications\ReservationNotification;
+use App\Mail\AnnonceUserReservationStatusChangedMail;
 use App\Notifications\ReservationStatusChangedNotification;
 
 class ReservationController extends Controller
@@ -147,17 +149,25 @@ class ReservationController extends Controller
 
         // Si le statut a changé, envoyer des notifications
         if (isset($validated['status']) && $validated['status'] !== $oldStatus) {
-            // Envoi des notifications par e-mail
-            Mail::to($reservation->annonce->user->email)->send(new ReservationStatusChangedMail($reservation, $validated['status']));
-            Mail::to($reservation->user->email)->send(new ReservationStatusChangedMail($reservation, $validated['status']));
+            // Envoi des notifications par e-mail à l'utilisateur ayant fait la réservation
+            // Mail::to($reservation->user->email)->send(new UserReservationStatusChangedMail($reservation, $validated['status']));
 
-            // Notifications de changement de statut
-            $reservation->annonce->user->notify(new ReservationStatusChangedNotification($reservation, $validated['status']));
+            // Stocker une notification dans la base de données pour l'utilisateur ayant fait la réservation
             $reservation->user->notify(new ReservationStatusChangedNotification($reservation, $validated['status']));
+
+            // Récupérer l'utilisateur qui a créé l'annonce
+            $annonceUser = $reservation->annonce->user;
+
+            // Envoi d'un e-mail à l'utilisateur créateur de l'annonce
+            // Mail::to($annonceUser->email)->send(new AnnonceUserReservationStatusChangedMail($reservation, $validated['status']));
+
+            // Stocker une notification dans la base de données pour l'utilisateur créateur de l'annonce
+            $annonceUser->notify(new ReservationStatusChangedNotification($reservation, $validated['status']));
         }
 
         return response()->json($reservation);
     }
+
 
     // Supprimer une réservation
     public function destroy($id)
@@ -167,34 +177,41 @@ class ReservationController extends Controller
         return response()->json(['message' => 'Réservation supprimée avec succès.'], 204);
     }
 
-    // Mise à jour du statut d'une réservation
-    public function updateStatus(Request $request, $reservationId)
-    {
-        // Validation du statut
-        $request->validate([
-            'status' => 'required|string|in:confirmée,annulée,en attente'
-        ]);
+ // Mise à jour du statut d'une réservation
+ public function updateStatus(Request $request, $reservationId)
+ {
+     // Validation du statut
+     $request->validate([
+         'status' => 'required|string|in:confirmée,annulée,en attente'
+     ]);
 
-        // Récupérer la réservation
-        $reservation = Reservation::findOrFail($reservationId);
+     // Récupérer la réservation
+     $reservation = Reservation::findOrFail($reservationId);
 
-        // Mise à jour du statut
-        $oldStatus = $reservation->status;
-        $reservation->status = $request->status;
-        $reservation->save();
+     // Mise à jour du statut
+     $oldStatus = $reservation->status;
+     $reservation->status = $request->status;
+     $reservation->save();
 
-        // Envoi des notifications par e-mail
-        Mail::to($reservation->annonce->user->email)->send(new ReservationStatusChangedMail($reservation, $request->status));
-        Mail::to($reservation->user->email)->send(new ReservationStatusChangedMail($reservation, $request->status));
+     // Envoi des notifications par e-mail à l'utilisateur ayant fait la réservation
+     Mail::to($reservation->user->email)->send(new UserReservationStatusChangedMail($reservation, $request->status));
 
-        // Stocker une notification dans la base de données pour le créateur de l'annonce
-        $reservation->annonce->user->notify(new ReservationStatusChangedNotification($reservation, $request->status));
+     // Stocker une notification dans la base de données pour l'utilisateur ayant fait la réservation
+     $reservation->user->notify(new ReservationStatusChangedNotification($reservation, $request->status));
 
-        // Stocker une notification dans la base de données pour l'utilisateur ayant fait la réservation
-        $reservation->user->notify(new ReservationStatusChangedNotification($reservation, $request->status));
+     // Récupérer l'utilisateur qui a créé l'annonce
+     $annonceUser = $reservation->annonce->user;
 
-        return response()->json(['message' => 'Statut mis à jour avec succès et notifications envoyées.']);
-    }
+     // Envoi d'un e-mail à l'utilisateur créateur de l'annonce
+     Mail::to($annonceUser->email)->send(new AnnonceUserReservationStatusChangedMail($reservation, $request->status));
+
+     // Stocker une notification dans la base de données pour l'utilisateur créateur de l'annonce
+     $annonceUser->notify(new ReservationStatusChangedNotification($reservation, $request->status));
+
+     return response()->json(['message' => 'Statut mis à jour avec succès et notifications envoyées.']);
+ }
+
+
 
     // Afficher le poids total des colis liés à une réservation
     public function totalPoidsColis($reservationId)

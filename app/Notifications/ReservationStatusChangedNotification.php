@@ -22,7 +22,7 @@ class ReservationStatusChangedNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['mail', 'database']; // Envoyer par email et sauvegarder dans la base de données
+        return [ 'database']; // Envoyer par email et sauvegarder dans la base de données
     }
 
     public function toMail($notifiable)

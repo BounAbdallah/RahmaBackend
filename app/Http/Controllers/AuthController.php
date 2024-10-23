@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\UserRegisteredMail;
+use App\Mail\UserRegisteredNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -51,8 +52,20 @@ class AuthController extends Controller
         $user = User::create($userData);
         $user->assignRole($role);
 
-        // Envoi de l'e-mail de confirmation
+        // Envoi de l'e-mail de confirmation à l'utilisateur
         Mail::to($user->email)->send(new UserRegisteredMail($user));
+
+        // Envoi de l'e-mail à l'administrateur et au gestionnaire
+        $admins = User::role('admin')->get(); // Récupérer tous les admins
+        $gestionnaires = User::role('gestionnaire')->get(); // Récupérer tous les gestionnaires
+
+        foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new UserRegisteredNotification($user));
+        }
+
+        foreach ($gestionnaires as $gestionnaire) {
+            Mail::to($gestionnaire->email)->send(new UserRegisteredNotification($user));
+        }
 
         return $user;
     }
@@ -69,10 +82,8 @@ class AuthController extends Controller
     {
         $additionalFields = [
             'cni' => $request->input('cni'),
-
             'passeport' => $request->input('passeport'),
             'date_de_naissance' => $request->input('date_de_naissance'),
-
         ];
         $this->createUser($request, $additionalFields, 'GP');
         return response()->json(['message' => 'GP registered successfully'], 201);
@@ -117,7 +128,6 @@ class AuthController extends Controller
             'date_de_naissance' => $request->input('date_de_naissance'),
         ];
         $this->createUser($request, $additionalFields, 'gestionnaire');
-
         return response()->json(['message' => 'Gestionnaire registered successfully'], 201);
     }
 
@@ -218,23 +228,15 @@ class AuthController extends Controller
         return response()->json(['message' => 'Account unarchived successfully']);
     }
 
-    // Suppression complète du compte utilisateur (par un admin)
-    public function deleteAccount(Request $request)
+    // Suppression du compte utilisateur
+    public function deleteAccount()
     {
+        // Récupérer l'utilisateur authentifié
         $user = Auth::user();
 
-        if ($user->hasRole('admin')) {
-            $user->forceDelete();
-            return response()->json(['message' => 'Account deleted permanently']);
-        }
+        // Supprimer l'utilisateur
+        $user->delete();
 
-        return response()->json(['message' => 'Unauthorized'], 403);
-    }
-
-    // Déconnexion utilisateur
-    public function logout()
-    {
-        auth()->logout();
-        return response()->json(['message' => 'Déconnexion réussie']);
+        return response()->json(['message' => 'Account deleted successfully']);
     }
 }
