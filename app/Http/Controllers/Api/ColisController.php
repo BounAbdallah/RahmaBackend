@@ -142,4 +142,17 @@ class ColisController extends Controller
         $colis->forceDelete();
         return response()->json(['message' => 'Colis permanently deleted']);
     }
+
+    public function historique()
+{
+    $user = Auth::user();
+
+    // Récupérer tous les colis créés par l'utilisateur connecté avec leur statut
+    $colis = Colis::where('user_id', $user->id)
+                    ->select('id', 'titre', 'statut', 'date_envoi', 'description')
+                    ->orderBy('date_envoi', 'desc')
+                    ->get();
+
+    return response()->json($colis);
+}
 }

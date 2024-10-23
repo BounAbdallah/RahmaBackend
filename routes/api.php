@@ -11,11 +11,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TarifController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\AnnonceController;
+use App\Http\Controllers\AnnonceGPController;
 use App\Http\Controllers\Api\ColisController;
 use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\DashboardGPController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\StatistiqueController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserMangementController;
 use App\Http\Controllers\ZoneLivraisonController;
 
@@ -101,15 +104,20 @@ Route::middleware(['auth:api', 'role:GP'])->group(function () {
     Route::post('/CreationAnnonces', [AnnonceController::class, 'store']);
     Route::get('/DetailsAnnonces/{id}', [AnnonceController::class, 'show']);
     Route::put('/ModificationAnnonces/{id}', [AnnonceController::class, 'update']);
+    Route::patch('/annonces/{id}/changer-statut', [AnnonceController::class, 'changerStatut']);
+
     Route::delete('/ArchiverAnnonces/{id}/archive', [AnnonceController::class, 'destroy']);
     Route::post('/RestorerAnnonces/{id}/restore', [AnnonceController::class, 'restore']);
     Route::delete('/SupprimerAnnonces/{id}', [AnnonceController::class, 'destroy']);
 });
 // Liste des annonce des GP disponible
 
-Route::get('/GpDisponible', [AnnonceController::class, 'annoceDisponible']);
-Route::get('/detailsAnnoceGP/{id}', [AnnonceController::class, 'detailAnnonceDisponible']);
+Route::get('/GpDisponible', [AnnonceController::class, 'annonceDisponible']);
+Route::get('/detailsAnnoceGP/{id}', [AnnonceController::class, 'show']);
 
+
+
+Route::get('/annonces/{annonceId}/colis', [ReservationController::class, 'getColisByAnnonce']);
 // Routes pour les tarifs
 Route::apiResource('tarifs', TarifController::class);
 
@@ -166,11 +174,17 @@ Route::middleware(['auth:api', 'role:Client'])->group(function () {
     Route::post('/client/colis/{id}/unarchive', [ClientController::class, 'unarchiveColis']);
     Route::put('/client/reservation/{id}', [ClientController::class, 'updateReservation']);
     Route::put('/client/livraison/{id}', [ClientController::class, 'updateLivraison']);
+Route::get('/historique/colis/', [ColisController::class, 'historique'])->middleware('auth');
+
+
 });
+Route::get('/Mesreservations', [ReservationController::class, 'userReservations'])->middleware('auth');
+
 
 // Routes spécifiques pour la gestion des livraisons par les clients
 Route::middleware(['auth:api', 'role:Client'])->group(function () {
     Route::apiResource('livraisons', LivraisonController::class);
+
 });
 
 Route::middleware(['auth:api', 'role:GP'])->group(function () {
@@ -197,5 +211,47 @@ Route::middleware(['auth:api', 'role:GP'])->group(function () {
     Route::delete('/annonces/{id}/archive', [AnnonceController::class, 'destroy']);
     Route::post('/annonces/{id}/restore', [AnnonceController::class, 'restore']);
     Route::delete('/annonces/{id}', [AnnonceController::class, 'destroy']);
+
+    Route::get('/annonces/{id}/colis', [AnnonceController::class, 'colisPourAnnonce']);
+
+Route::get('/historique', [AnnonceController::class, 'historique'])->name('annonces.historique');
+Route::get('/statistiques', [AnnonceController::class, 'statistiques'])->name('annonces.statistiques');
+
+
+
+Route::get('/reservations/{id}/total-poids', [ReservationController::class, 'totalPoidsColis']);
+
+
+// Statistiques
+
+
+Route::get('/statistiques/utilisateurs-actifs', [StatistiqueController::class, 'utilisateursActifs']);
+Route::get('/statistiques/revenu-annonce/{id}', [StatistiqueController::class, 'revenuTotalSurAnnonce']);
+Route::get('/statistiques/revenu-total', [StatistiqueController::class, 'revenuTotal']);
+Route::get('/statistiques/poids-annonce/{id}', [StatistiqueController::class, 'poidsTotalSurAnnonce']);
+Route::get('/statistiques/poids-total', [StatistiqueController::class, 'poidsTotal']);
+
+});
+
+Route::get('/notifications', [NotificationController::class, 'index']);
+
+
+
+//Route des annonces GP
+
+
+Route::middleware(['auth', 'role:GP'])->group(function () {
+    Route::resource('gp-annonces', AnnonceGPController::class)->except(['show']);
+    Route::post('/gp-annonces/restore/{id}', [AnnonceGPController::class, 'restore']);
+    Route::get('/gp-annonces/reservations', [AnnonceGPController::class, 'reservationsUtilisateurs'])->name('gp-annonces.reservations');
+    Route::get('/gp-annonces/{id}/reservations', [AnnonceGPController::class, 'reservationsAnnonce'])->name('gp-annonces.reservationsAnnonce');
+    Route::get('/gp-annonces/statistiques', [AnnonceGPController::class, 'statistiques'])->name('gp-annonces.statistiques');
+    Route::get('/gp-annonces/evolution-statistiques', [AnnonceGPController::class, 'evolutionStatistiques'])->name('gp-annonces.evolution-statistiques');
+    Route::get('/gp-annonces/colis', [AnnonceGPController::class, 'colisLiensReservations']);
+    Route::get('/gp-annonces/utilisateurs-plus-reservations', [AnnonceGPController::class, 'utilisateursPlusReserves']);
+    Route::get('/gp-annonces/tous-utilisateurs-reserves', [AnnonceGPController::class, 'tousLesUtilisateursAyantReserve']);
+
+    Route::get('/gp-annonces/{id}/colis', [AnnonceGPController::class, 'colisAnnonce']);
+
 
 });

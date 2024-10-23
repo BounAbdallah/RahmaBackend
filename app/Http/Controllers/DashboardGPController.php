@@ -57,16 +57,15 @@ class DashboardGPController extends Controller
         // Préparer les détails des réservations et des colis
         $reservationsDetails = $reservations->map(function ($reservation) {
             return [
-                'reservation_id' => $reservation,
-          'colis' => $reservation->colis->map(function ($colis) {
-              return response([
-                'colis_id' => $colis->id,
-                'description' => $colis->description,
-                'poids' => $colis->poids,
-                'dimensions' => $colis->dimensions,
-                'status' => $colis->status,
-              ]);
-          }),
+                'reservation_id' => $reservation->id,
+                'user' => $reservation->user->nom ?? 'Utilisateur inconnu',
+                'colis' => [
+                    'colis_id' => $reservation->colis->id,
+                    'description' => $reservation->colis->description,
+                    'poids' => $reservation->colis->poids,
+                    'dimensions' => $reservation->colis->dimensions,
+                    'status' => $reservation->colis->status,
+                ],
             ];
         });
 
@@ -74,9 +73,9 @@ class DashboardGPController extends Controller
             'annonce' => $annonce,
             'nombre_reservations' => $nombreReservations,
             'reservations_details' => $reservationsDetails,
-            'colis' => $reservations->pluck('colis')
         ], 200);
     }
+
 
     // Méthode pour afficher les colis liés à une annonce spécifique
     public function colisParAnnonce($annonceId)

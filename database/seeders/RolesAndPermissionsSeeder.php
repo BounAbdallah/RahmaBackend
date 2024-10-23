@@ -46,17 +46,21 @@ class RolesAndPermissionsSeeder extends Seeder
             'supprimer un colis',
             'archiver un colis',
             'réserver à une annonce',
+            'voir l\'historique des colis',
 
+            // Nouvelle permission ajoutée
+            'voir l\'historique des réservations',
 
             'voir son tableau de bord',
-    'modifier un colis',
-    'archiver un colis',
-    'désarchiver un colis',
-    'supprimer un colis',
-    'modifier une réservation',
-    'modifier une livraison',
-    'Afficher son profil',
-    'Modifier son profil',
+            'modifier un colis',
+            'archiver un colis',
+            'désarchiver un colis',
+            'supprimer un colis',
+            'modifier une réservation',
+            'modifier une livraison',
+            'Afficher son profil',
+            'Modifier son profil',
+
             // Permissions spécifiques pour les chauffeurs
             'accepter réservations annonces',
             'refuser réservations annonces',
@@ -64,8 +68,10 @@ class RolesAndPermissionsSeeder extends Seeder
             // Permissions spécifiques pour les GP
             'voir les détails des colis des clients',
             'archiver les colis des clients',
+            'moodifier une annonce',
+            'archiver une annonce',
+            'désarchiver une annonce',
         ];
-
 
         // Créer toutes les permissions si elles n'existent pas déjà
         foreach ($permissions as $permission) {
@@ -113,7 +119,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'voir les rôles et permissions',
                 'Afficher son profil',
                 'Modifier son profil',
-
+                'voir l\'historique des réservations',
             ],
 
             'Gestionnaire' => [
@@ -129,6 +135,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'creer une livraison',
                 'Afficher son profil',
                 'Modifier son profil',
+                'voir l\'historique des colis',
+                'voir l\'historique des réservations',
             ],
             'Chauffeur' => [
                 'créer des annonces',
@@ -141,6 +149,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'refuser réservations annonces',
                 'Afficher son profil',
                 'Modifier son profil',
+                'voir l\'historique des réservations',
             ],
             'Livreur' => [
                 'attribuer des livraisons',
@@ -151,9 +160,13 @@ class RolesAndPermissionsSeeder extends Seeder
                 'archiver un colis',
                 'Afficher son profil',
                 'Modifier son profil',
+                'voir l\'historique des réservations',
             ],
             'GP' => [
                 'créer des annonces',
+                'moodifier une annonce',
+            'archiver une annonce',
+            'désarchiver une annonce',
                 'approuver les réservations de KG',
                 'gérer son profil',
                 'ajouter un colis',
@@ -163,6 +176,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'archiver les colis des clients',
                 'Afficher son profil',
                 'Modifier son profil',
+                'voir l\'historique des réservations',
             ],
             'Client' => [
                 'réserver des KG',
@@ -177,17 +191,19 @@ class RolesAndPermissionsSeeder extends Seeder
                 'réserver à une annonce',
                 'creer une livraison',
                 'voir son tableau de bord',
-        'ajouter un colis',
-        'modifier un colis',
-        'supprimer un colis',
-        'archiver un colis',
-        'désarchiver un colis',
-        'réserver à une annonce',
-        'modifier une réservation',
-        'modifier une livraison',
-        'creer une livraison',
-        'Afficher son profil',
-        'Modifier son profil',
+                'ajouter un colis',
+                'modifier un colis',
+                'supprimer un colis',
+                'archiver un colis',
+                'désarchiver un colis',
+                'réserver à une annonce',
+                'modifier une réservation',
+                'modifier une livraison',
+                'creer une livraison',
+                'Afficher son profil',
+                'Modifier son profil',
+                'voir l\'historique des colis',
+                'voir l\'historique des réservations',
             ],
         ];
 

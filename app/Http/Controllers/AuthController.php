@@ -40,6 +40,7 @@ class AuthController extends Controller
             'email' => $request->input('email'),
             'telephone' => $request->input('telephone'),
             'password' => Hash::make($request->input('password')),
+            'nationalite' => $request->input('nationalite'),
             'adress' => $request->input('adress'),
             'commune' => $request->input('commune'),
             'photo_profil' => $imagePath, // Ajout du chemin de l'image dans les données utilisateur
@@ -68,11 +69,10 @@ class AuthController extends Controller
     {
         $additionalFields = [
             'cni' => $request->input('cni'),
-            'pays_de_voyage' => $request->input('pays_de_voyage'),
-            'region_de_voyage' => $request->input('region_de_voyage'),
+
             'passeport' => $request->input('passeport'),
             'date_de_naissance' => $request->input('date_de_naissance'),
-            'prix_kg' => $request->input('prix_kg'),
+
         ];
         $this->createUser($request, $additionalFields, 'GP');
         return response()->json(['message' => 'GP registered successfully'], 201);
