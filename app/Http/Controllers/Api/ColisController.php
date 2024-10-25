@@ -78,9 +78,9 @@ class ColisController extends Controller
     {
         $user = Auth::user();
 
-        if ($colis->user_id !== $user->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        // if ($colis->user_id !== $user->id) {
+        //     return response()->json(['message' => 'Unauthorized'], 403);
+        // }
 
         $request->validate([
             'titre' => 'sometimes|required|string|max:255',

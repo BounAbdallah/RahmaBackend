@@ -1,20 +1,31 @@
 <?php
 
+
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    // Récupérer toutes les notifications non lues de l'utilisateur connecté
+    // Récupérer toutes les notifications de l'utilisateur connecté
     public function index()
     {
-        // Récupérer toutes les notifications de l'utilisateur connecté
-        $notifications = auth()->user()->notifications;
+        // Récupérer les notifications non lues
+        $notifications = auth()->user()->notifications()->get();
 
-        return response()->json($notifications);
+        // Ajouter le champ 'data' pour accéder au message de la notification
+        $formattedNotifications = $notifications->map(function ($notification) {
+            return [
+                'id' => $notification->id,
+                'message' => $notification->data['message'], // Extraire le message de la notification
+                'read_at' => $notification->read_at,
+                'created_at' => $notification->created_at,
+            ];
+        });
+
+        return response()->json($formattedNotifications);
     }
-
 
     // Marquer une notification comme lue
     public function markAsRead($id)

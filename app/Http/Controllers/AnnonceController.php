@@ -72,24 +72,68 @@ public function detailAnnonceDisponible($id)
 
     // Affichage d'une annonce spécifique
 // Affichage d'une annonce spécifique
+// public function show($id)
+// {
+//     $annonce = Annonce::with(['reservations.colis']) // Charger les relations pour les réservations et les colis
+//                       ->find($id); // Utiliser find au lieu de findOrFail
+
+//     if (!$annonce) {
+//         return response()->json(['error' => 'Annonce non trouvée.'], 404); // Retourner un message d'erreur personnalisé
+//     }
+
+//     return response()->json($annonce);
+// }
 public function show($id)
 {
-    $annonce = Annonce::with(['reservations.colis']) // Charger les relations pour les réservations et les colis
-                      ->find($id); // Utiliser find au lieu de findOrFail
+    $annonce = Annonce::with([
+        'reservations' => function ($query) {
+            $query->select('id', 'annonce_id', 'date_reservation', 'status', 'user_id', 'colis_id');
+        },
+        'reservations.user' => function ($query) {
+            $query->select('id', 'prenom', 'nom', 'email', 'telephone', 'adress');
+        },
+        'reservations.colis' => function ($query) {
+            $query->select('id', 'titre', 'poids_kg', 'adresse_expediteur', 'adresse_destinataire', 'contact_destinataire', 'contact_expediteur', 'date_envoi', 'date_reception', 'statut', 'description', 'image_1', 'image_2', 'image_3');
+        }
+    ])
+    ->select('id', 'titre', 'date_debut_reception_colis', 'date_fin_reception_colis', 'heure_fin_reception_colis', 'description', 'condition', 'statut', 'poids_kg', 'prix_par_kg', 'pays_provenance_voyage', 'region_provenance_voyage', 'pays_destination_voyage', 'region_destination_voyage')
+    ->find($id);
 
     if (!$annonce) {
-        return response()->json(['error' => 'Annonce non trouvée.'], 404); // Retourner un message d'erreur personnalisé
+        return response()->json(['error' => 'Annonce non trouvée.'], 404);
     }
+
+    // Calculer la somme des poids des colis liés aux réservations
+    $totalReservedWeight = $annonce->reservations->sum(function ($reservation) {
+        return $reservation->colis ? $reservation->colis->poids_kg : 0;
+    });
+
+    // Calculer le poids disponible
+    $availableWeight = $annonce->poids_kg - $totalReservedWeight;
+
+    // Vérifier les conditions de changement de statut
+    $currentDateTime = now();
+    $finReceptionDateTime = $annonce->date_fin_reception_colis . ' ' . $annonce->heure_fin_reception_colis;
+
+    if ($availableWeight <= 0 || $currentDateTime >= $finReceptionDateTime) {
+        $annonce->statut = 'expirée';
+        $annonce->save();
+    }
+
+    // Ajouter le poids disponible à la réponse
+    $annonce->available_weight = $availableWeight;
 
     return response()->json($annonce);
 }
 
 
 
+
+
     // Création d'une nouvelle annonce
     public function store(Request $request)
     {
-        \Log::info('Store method called');
+
 
         // Validation des données d'entrée
         $validatedData = $request->validate([
@@ -130,7 +174,7 @@ public function show($id)
             ], 201); // Code 201 pour la création réussie
 
         } catch (\Exception $e) {
-            \Log::error('Annonce creation failed', ['error' => $e->getMessage()]);
+
             return response()->json(['message' => 'Annonce creation failed'], 500);
         }
     }

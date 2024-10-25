@@ -22,7 +22,7 @@ class AnnonceGPController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'image' => 'nullable|url',
+            // 'image' => 'nullable|url',
             'titre' => 'required|string|max:255',
             'date_debut_reception_colis' => 'required|date',
             'date_fin_reception_colis' => 'required|date|after_or_equal:date_debut_reception_colis',
@@ -148,8 +148,8 @@ public function colisLiensReservations()
       ->get();
 
     // Récupérer les colis de chaque réservation
-    $colis = $reservations->pluck('colis')->filter(); // Assurez-vous de ne pas inclure les réservations sans colis
-
+    $colis = $reservations->pluck('colis')->filter();
+    
     return response()->json($colis);
 }
 
@@ -293,7 +293,7 @@ public function evolutionStatistiques(Request $request)
 
         // Vérification des données d'aujourd'hui pour le débogage
         if ($jour === now()->format('Y-m-d')) {
-            \Log::info("Données pour aujourd'hui: Annonces: $nombreAnnonces, Réservations: $nombreReservations, Colis: $nombreColis");
+           info("Données pour aujourd'hui: Annonces: $nombreAnnonces, Réservations: $nombreReservations, Colis: $nombreColis");
         }
     }
 

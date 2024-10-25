@@ -233,7 +233,10 @@ Route::get('/statistiques/poids-total', [StatistiqueController::class, 'poidsTot
 
 });
 
-Route::get('/notifications', [NotificationController::class, 'index']);
+Route::get('notifications', [NotificationController::class, 'index']);
+Route::post('notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
+Route::post('notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
+
 
 
 

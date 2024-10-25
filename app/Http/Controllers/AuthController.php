@@ -158,7 +158,13 @@ class AuthController extends Controller
             "expires_in" => env("JWT_TTL") * 60 . ' seconds'
         ]);
     }
+    public function logout(Request $request)
+    {
+        // Si vous utilisez Laravel Sanctum ou Passport
+        Auth::guard('api')->logout();
 
+        return response()->json(['message' => 'Déconnexion réussie'], 200);
+    }
     // Modification du compte utilisateur avec gestion d'image
     public function updateAccount(Request $request)
     {
