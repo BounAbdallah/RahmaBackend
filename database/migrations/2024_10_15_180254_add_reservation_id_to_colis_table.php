@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('colis', function (Blueprint $table) {
-            $table->unsignedBigInteger('reservation_id')->nullable()->after('id');
-            $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
-        });
+        // Schema::table('colis', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('reservation_id')->nullable()->after('id');
+        //     $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
+        // });
     }
 
     /**
@@ -22,9 +22,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('colis', function (Blueprint $table) {
-            $table->dropForeign(['reservation_id']);
-            $table->dropColumn('reservation_id');
-        });
+        // Schema::table('colis', function (Blueprint $table) {
+        //     $table->dropForeign(['reservation_id']);
+        //     $table->dropColumn('reservation_id');
+        // });
     }
 };

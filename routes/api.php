@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\DashboardGPController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StatistiqueController;
+use App\Http\Controllers\Api\NotationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserMangementController;
 use App\Http\Controllers\ZoneLivraisonController;
@@ -115,6 +116,7 @@ Route::middleware(['auth:api', 'role:GP'])->group(function () {
 Route::get('/GpDisponible', [AnnonceController::class, 'annonceDisponible']);
 Route::get('/detailsAnnoceGP/{id}', [AnnonceController::class, 'show']);
 
+Route::apiResource('notations', NotationController::class);
 
 
 Route::get('/annonces/{annonceId}/colis', [ReservationController::class, 'getColisByAnnonce']);
