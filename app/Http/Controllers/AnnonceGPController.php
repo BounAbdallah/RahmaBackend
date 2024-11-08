@@ -35,9 +35,9 @@ class AnnonceGPController extends Controller
             'pays_destination_voyage' => 'nullable|string|max:255',
             'region_destination_voyage' => 'nullable|string|max:255',
             'date_prevue_voyage' => 'nullable|date',
-            'heure_prevue_voyage' => 'nullable|date_format:H:i:s',
-            'heure_debut_reception_colis' => 'nullable|date_format:H:i:s',
-            'heure_fin_reception_colis' => 'nullable|date_format:H:i:s',
+            'heure_prevue_voyage' => 'nullable|date_format:H:i',
+            'heure_debut_reception_colis' => 'nullable|date_format:H:i',
+            'heure_fin_reception_colis' => 'nullable|date_format:H:i',
             'prix_par_kg' => 'required|numeric',
         ]);
 
@@ -149,7 +149,7 @@ public function colisLiensReservations()
 
     // Récupérer les colis de chaque réservation
     $colis = $reservations->pluck('colis')->filter();
-    
+
     return response()->json($colis);
 }
 

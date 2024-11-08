@@ -75,11 +75,11 @@ class ColisController extends Controller
     // Afficher les détails d'un colis spécifique, uniquement si l'utilisateur est le créateur
     public function show(Colis $colis)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
 
-        if ($colis->user_id !== $user->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        // if ($colis->user_id !== $user->id) {
+        //     return response()->json(['message' => 'Unauthorized'], 403);
+        // }
 
         return response()->json($colis);
     }
