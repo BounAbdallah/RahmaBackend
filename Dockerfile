@@ -26,11 +26,7 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader --verb
 
 RUN composer require php-open-source-saver/jwt-auth
 
-# Copie du fichier .env (assurez-vous que .env existe dans votre projet local)
-COPY .env /app/.env
-
-# Exécuter les commandes artisan
-CMD rm -f public/storage && \
+CMD php artisan vendor:publish --provider="PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider" && \
     php artisan storage:link && \
     php artisan key:generate && \
     php artisan migrate:refresh && \
