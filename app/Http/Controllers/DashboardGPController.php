@@ -8,6 +8,8 @@ use App\Models\Annonce;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StatutReservationChange;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DashboardGPController extends Controller
@@ -149,15 +151,18 @@ class DashboardGPController extends Controller
     public function changerStatutReservation($id, Request $request)
     {
         $request->validate([
-            'status' => 'required|string', // Assurez-vous que le statut est valide
+            'status' => 'required|string',
         ]);
 
         try {
-            $reservation = Reservation::findOrFail($id); // Trouver la réservation par ID
-            $reservation->status = $request->input('status'); // Mettre à jour le statut
-            $reservation->save(); // Enregistrer les changements
+            $reservation = Reservation::findOrFail($id);
+            $reservation->status = $request->input('status');
+            $reservation->save();
 
-            return response()->json(['message' => 'Statut mis à jour avec succès.'], 200);
+            // Envoyer un email à l'utilisateur ayant créé la réservation
+            Mail::to($reservation->user->email)->send(new StatutReservationChange($reservation, $reservation->status));
+
+            return response()->json(['message' => 'Statut mis à jour avec succès et email envoyé.'], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Réservation non trouvée.'], 404);
         } catch (\Exception $e) {

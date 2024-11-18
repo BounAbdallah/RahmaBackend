@@ -212,6 +212,32 @@ class ReservationController extends Controller
  }
 
 
+ public function statistiques()
+ {
+     $gpId = Auth::id();
+
+     // Récupérer toutes les annonces créées par le GP
+     $annoncesIds = Annonce::where('createur', $gpId)->pluck('id');
+
+     // Statistiques : Nombre d'annonces
+     $nombreAnnonces = Annonce::where('createur', $gpId)->count();
+
+     // Statistiques : Nombre de réservations liées à ces annonces
+     $nombreReservations = Reservation::whereIn('annonce_id', $annoncesIds)->count();
+
+     // Statistiques : Nombre de colis liés à ces réservations
+     $reservationsIds = Reservation::whereIn('annonce_id', $annoncesIds)->pluck('id');
+
+     // Compter les colis basés sur les réservations
+     $nombreColis = Colis::whereIn('reservation_id', $reservationsIds)->count();
+
+     // Retourner les statistiques sous forme de JSON
+     return response()->json([
+         'nombre_annonces' => $nombreAnnonces,
+         'nombre_reservations' => $nombreReservations,
+         'nombre_colis' => $nombreColis,
+     ], 200);
+ }
 
     // Afficher le poids total des colis liés à une réservation
     public function totalPoidsColis($reservationId)
@@ -229,4 +255,23 @@ class ReservationController extends Controller
 
         return response()->json(['total_poids' => $totalPoids]);
     }
+
+
+
+    public function nombreReservationsParUtilisateur()
+{
+    // Récupérer l'ID de l'utilisateur connecté
+    $userId = Auth::id();
+
+    // Récupérer les annonces créées par l'utilisateur connecté
+    $annonces = Annonce::where('createur', $userId)->pluck('id');
+
+    // Compter le nombre de réservations liées à ces annonces
+    $nombreReservations = Reservation::whereIn('annonce_id', $annonces)->count();
+
+    // Retourner le nombre de réservations sous forme de réponse JSON
+    return response()->json([
+        'nombre_reservations' => $nombreReservations,
+    ], 200);
+}
 }

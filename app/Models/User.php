@@ -45,7 +45,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             'password' => 'hashed',
         ];
     }
-
+    public function annonces()
+    {
+        return $this->hasMany(Annonce::class);
+    }
     // JWT
     public function getJWTIdentifier()
     {
@@ -57,5 +60,5 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return [];
     }
 
-  
+
 }

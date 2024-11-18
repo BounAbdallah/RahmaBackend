@@ -206,6 +206,8 @@ Route::middleware(['auth:api', 'role:GP'])->group(function () {
 
     Route::patch('/reservation/{id}/changer-statut', [DashboardGPController::class, 'changerStatutReservation']);
 
+    Route::patch('/colis/{id}/statut', [ColisController::class, 'changerStatutColis']);
+
     Route::get('/annonces', [AnnonceController::class, 'index']);
     Route::post('/gp/annonces', [AnnonceController::class, 'store']);
     Route::get('/annonces/{id}', [AnnonceController::class, 'show']);
@@ -232,6 +234,12 @@ Route::get('/statistiques/revenu-annonce/{id}', [StatistiqueController::class, '
 Route::get('/statistiques/revenu-total', [StatistiqueController::class, 'revenuTotal']);
 Route::get('/statistiques/poids-annonce/{id}', [StatistiqueController::class, 'poidsTotalSurAnnonce']);
 Route::get('/statistiques/poids-total', [StatistiqueController::class, 'poidsTotal']);
+Route::get('/annonces/nombre-reservations', [ReservationController::class, 'statistiques']);
+
+
+
+
+Route::get('/statistiques/reservations', [ReservationController::class, 'nombreReservationsParUtilisateur']);
 
 });
 

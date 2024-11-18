@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Colis;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Mail\ColisStatusUpdatedMail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class ColisController extends Controller
 {
@@ -18,7 +22,8 @@ class ColisController extends Controller
         return response()->json($colis);
     }
 
-    // Créer un nouveau colis
+    // Créer un nouveau colis (seulement les utilisateurs avec les rôles 'Client', 'GP', 'Admin', ou 'Gestionnaire' peuvent le faire)
+
     public function store(Request $request)
     {
         $user = Auth::user();
@@ -42,18 +47,16 @@ class ColisController extends Controller
             'date_envoi' => 'required|date',
             'statut' => 'required|in:en transit,livré,en attente,retourné',
             'description' => 'nullable|string',
-            // 'image_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_1' => 'nullable|file|mimes:jpeg,png,jpg', // Validation pour accepter les fichiers
         ]);
 
-        // Gestion de l'image du colis
-        // $imagePath = 'assets/default-image.jpg'; // Valeur par défaut
+        // Télécharger l'image si présente dans la requête
+        $imagePath = null;
+        if ($request->hasFile('image_1')) {
+            $imagePath = $request->file('image_1')->store('colis_image', 'public');
+        }
 
-        // if ($request->hasFile('image_1')) {
-        //     // Stockage de l'image dans un dossier spécifique pour les colis
-        //     $imagePath = $request->file('image_1')->store('colis_images', 'public');
-        // }
-
-        // Création du colis avec les informations et le chemin de l'image
+        // Création du colis
         $colis = Colis::create([
             'user_id' => $user->id,
             'titre' => $request->titre,
@@ -65,21 +68,53 @@ class ColisController extends Controller
             'date_envoi' => $request->date_envoi,
             'statut' => $request->statut,
             'description' => $request->description,
-            // 'image_1' => $imagePath, // Chemin de l'image du colis
+            'image_1' => $imagePath,
         ]);
 
         return response()->json($colis, 201);
     }
 
 
+
+    public function changerStatutColis($id, Request $request)
+    {
+        // Validation du statut
+
+        $request->validate([
+            'statut' => 'required|string',
+
+]);
+
+
+        try {
+            // Trouver le colis
+            $colis = Colis::findOrFail($id);
+
+            // Mettre à jour le statut du colis
+            $colis->statut = $request->input('statut');
+            $colis->save(); // Sauvegarder les changements
+
+            // Trouver l'utilisateur qui a créé le colis
+            $user = User::findOrFail($colis->user_id);
+
+            // Envoyer l'email à l'utilisateur
+            Mail::to($user->email)->send(new ColisStatusUpdatedMail($colis, $request->input('statut')));
+
+            return response()->json(['message' => 'Statut du colis mis à jour et email envoyé avec succès.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erreur lors de la mise à jour du statut du colis.', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+
+
+
     // Afficher les détails d'un colis spécifique, uniquement si l'utilisateur est le créateur
     public function show(Colis $colis)
     {
-        // $user = Auth::user();
+        $user = Auth::user();
 
-        // if ($colis->user_id !== $user->id) {
-        //     return response()->json(['message' => 'Unauthorized'], 403);
-        // }
+
 
         return response()->json($colis);
     }
@@ -100,24 +135,11 @@ class ColisController extends Controller
             'adresse_destinataire' => 'sometimes|required|string',
             'contact_destinataire' => 'sometimes|required|string',
             'contact_expediteur' => 'sometimes|required|string',
-            'date_envoi' => 'nullable|date',
+            'date_envoi' => 'sometimes|required|date',
             'statut' => 'sometimes|required|in:en transit,livré,en attente,retourné',
             'description' => 'nullable|string',
-            // 'image_1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Gestion de l'image
-        if ($request->hasFile('image_1')) {
-            $imagePath = $request->file('image_1')->store('photo_profil', 'public');
-            $request->merge(['image_1' => $imagePath]);
-        }
-
-        // Définir la date d'envoi à la date actuelle si elle n'est pas fournie
-        if (empty($request->date_envoi)) {
-            $request->merge(['date_envoi' => now()]);
-        }
-
-        // Mettre à jour le colis
         $colis->update($request->all());
         return response()->json($colis);
     }
@@ -131,6 +153,7 @@ class ColisController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
+        // Archiver le colis
         $colis->etat = 'archivé';
         $colis->save();
 
@@ -146,6 +169,7 @@ class ColisController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
+        // Désarchiver le colis
         $colis->etat = 'desarchivé';
         $colis->save();
 
@@ -164,6 +188,7 @@ class ColisController extends Controller
         $colis->forceDelete();
         return response()->json(['message' => 'Colis permanently deleted']);
     }
+
 
     public function historique()
     {
