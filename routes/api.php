@@ -15,6 +15,7 @@ use App\Http\Controllers\AnnonceGPController;
 use App\Http\Controllers\Api\ColisController;
 use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\CompteUserController;
 use App\Http\Controllers\DashboardGPController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StatistiqueController;
@@ -32,6 +33,7 @@ Route::middleware('api')->group(function () {
     Route::post('/register/chauffeur', [AuthController::class, 'registerChauffeur'])->name('register.chauffeur');
     Route::post('/register/livreur', [AuthController::class, 'registerLivreur'])->name('register.livreur');
     Route::post('/login', [AuthController::class, 'login']);
+   
 });
 
 // Routes protégées par auth:sanctum
@@ -59,6 +61,16 @@ Route::middleware('auth:api')->group(function () {
 // Routes pour la suppression complète du compte (accessible aux admins)
 Route::middleware(['auth:api', 'role:Admin'])->group(function () {
     Route::delete('/user/delete', [AuthController::class, 'deleteAccount']);
+    Route::prefix('comptes')->group(function () {
+        Route::get('', [CompteUserController::class, 'index']); // Liste des comptes
+        Route::post('', [CompteUserController::class, 'store']); // Créer un compte
+        Route::get('{compteUser}', [CompteUserController::class, 'show']); // Afficher un compte
+        Route::put('{compteUser}', [CompteUserController::class, 'update']); // Mettre à jour un compte
+        Route::delete('{compteUser}', [CompteUserController::class, 'destroy']); // Soft delete
+        Route::post('{id}/restore', [CompteUserController::class, 'restore']); // Restaurer un compte
+        Route::delete('{id}/force-delete', [CompteUserController::class, 'forceDelete']); // Suppression définitive
+    });
+   
 });
 
 // Routes pour les colis
