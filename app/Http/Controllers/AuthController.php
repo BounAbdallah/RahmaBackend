@@ -134,22 +134,43 @@ class AuthController extends Controller
     // Connexion utilisateur
     public function login(Request $request)
     {
+        // Validation des données entrantes
         $validator = validator($request->all(), [
             'email' => 'required|email|string',
             'password' => 'required|string|min:8',
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-
+    
         $credentials = $request->only('email', 'password');
-        $token = auth()->attempt($credentials);
-
-        if (!$token) {
-            return response()->json(['message' => 'Information de connexion incorrectes'], 401);
+    
+        // Vérifier si l'utilisateur existe et si son état est "archivé"
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
+    
+        if (!$user) {
+            return response()->json(['message' => 'Utilisateur non trouvé'], 404);
+        }
+    
+        if ($user->etat === 'archivé') {
+            return response()->json([
+                'message' => 'Votre compte est archivé. Veuillez contacter un administrateur.'
+            ], 403);
         }
 
+        if (auth()->user()->etat !== 'actif') {
+            return response()->json(['message' => 'Compte désactivé'], 403);
+        }        
+    
+        // Tentative d'authentification
+        $token = auth()->attempt($credentials);
+    
+        if (!$token) {
+            return response()->json(['message' => 'Informations de connexion incorrectes'], 401);
+        }
+    
+        // Retourner le jeton et les informations utilisateur
         return response()->json([
             "access_token" => $token,
             "token_type" => "bearer",
@@ -158,6 +179,7 @@ class AuthController extends Controller
             "expires_in" => env("JWT_TTL") * 60 . ' seconds'
         ]);
     }
+    
     public function logout(Request $request)
     {
         // Si vous utilisez Laravel Sanctum ou Passport
@@ -245,4 +267,39 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Account deleted successfully']);
     }
+
+    // Archiver un compte
+    public function toggleEtat(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        // Alterne entre 'actif' et 'archivé' (désactivé)
+        $user->etat = $user->etat === 'actif' ? 'archivé' : 'actif';
+        $user->save();
+
+        return response()->json([
+            'message' => 'Utilisateur ' . ($user->etat === 'actif' ? 'activé' : 'désactivé') . ' avec succès',
+            'user' => $user,
+        ]);
+    }
+
+    // Activer un compte deja archiver
+    public function desarchiverUser($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->etat === 'actif') {
+            return response()->json(['message' => 'L\'utilisateur est déjà actif'], 400);
+        }
+
+        // Remettre l'utilisateur en 'actif'
+        $user->etat = 'actif';
+        $user->save();
+
+        return response()->json([
+            'message' => 'Utilisateur activé avec succès',
+            'user' => $user,
+        ]);
+    }
+
 }

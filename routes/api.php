@@ -56,6 +56,14 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
+// Route pour activer ou desactiver un compte
+Route::middleware(['auth:api', 'role:Admin'])->group(function () {
+    Route::put('/users/{id}/toggle-etat', [AuthController::class, 'toggleEtat']);
+    Route::put('/users/{id}/activer', [AuthController::class, 'desarchiverUser']);
+
+});
+
+
 // Routes pour la suppression complète du compte (accessible aux admins)
 Route::middleware(['auth:api', 'role:Admin'])->group(function () {
     Route::delete('/user/delete', [AuthController::class, 'deleteAccount']);
@@ -126,6 +134,7 @@ Route::apiResource('tarifs', TarifController::class);
 Route::middleware(['auth:api', 'role:Admin'])->group(function () {
     Route::post('/tarifs', [TarifController::class, 'store']);
 });
+
 
 // Routes pour le dashboard admin
 Route::middleware(['auth:api', 'role:Admin'])->group(function () {
