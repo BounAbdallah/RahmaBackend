@@ -147,7 +147,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
     
         // Vérifier si l'utilisateur existe et si son état est "archivé"
-        $user = \App\Models\User::where('email', $credentials['email'])->first();
+        $user = User::where('email', $credentials['email'])->first();
     
         if (!$user) {
             return response()->json(['message' => 'Utilisateur non trouvé'], 404);
