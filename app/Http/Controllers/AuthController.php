@@ -146,22 +146,24 @@ class AuthController extends Controller
     
         $credentials = $request->only('email', 'password');
     
-        // Vérifier si l'utilisateur existe et si son état est "archivé"
+        // Vérifier si l'utilisateur existe
         $user = User::where('email', $credentials['email'])->first();
     
         if (!$user) {
             return response()->json(['message' => 'Utilisateur non trouvé'], 404);
         }
     
+        // Vérifier si l'utilisateur est archivé
         if ($user->etat === 'archivé') {
             return response()->json([
                 'message' => 'Votre compte est archivé. Veuillez contacter un administrateur.'
             ], 403);
         }
-
-        if (auth()->user()->etat !== 'actif') {
+    
+        // Vérifier si l'utilisateur est actif (authentifié)
+        if (auth()->check() && auth()->user()->etat !== 'actif') {
             return response()->json(['message' => 'Compte désactivé'], 403);
-        }        
+        }
     
         // Tentative d'authentification
         $token = auth()->attempt($credentials);
@@ -179,6 +181,7 @@ class AuthController extends Controller
             "expires_in" => env("JWT_TTL") * 60 . ' seconds'
         ]);
     }
+    
     
     public function logout(Request $request)
     {

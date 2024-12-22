@@ -23,11 +23,29 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // return [
+        //     'name' => fake()->name(),
+        //     'email' => fake()->unique()->safeEmail(),
+        //     'email_verified_at' => now(),
+        //     'password' => static::$password ??= Hash::make('password'),
+        //     'remember_token' => Str::random(10),
+        // ];
         return [
-            'name' => fake()->name(),
+            'prenom' => $this->faker->firstName(),
+            'nom' => $this->faker->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            'telephone' => $this->faker->phoneNumber(),
             'password' => static::$password ??= Hash::make('password'),
+            'adress' => $this->faker->address(),
+            'cni' => $this->faker->numerify('######'),  // Exemple de CNI
+            'permis_conduire' => $this->faker->numerify('#######'),  // Exemple de permis de conduire
+            'pays_de_voyage' => $this->faker->country(),
+            'region_de_voyage' => $this->faker->state(),
+            'passeport' => $this->faker->numerify('#####-####'),
+            'date_de_naissance' => $this->faker->date(),
+            'prix_kg' => $this->faker->randomFloat(2, 1, 50),  // Prix par kg
+            'commune' => $this->faker->city(),
+            'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ];
     }
