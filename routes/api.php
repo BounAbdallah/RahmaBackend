@@ -73,6 +73,8 @@ Route::middleware(['auth:api', 'role:Admin'])->group(function () {
 
 // });
 Route::get('/commandes', [CommandeController::class, 'index']);
+Route::get('/commandes/{id}', [CommandeController::class, 'show']);
+
 
 
 // Routes pour la suppression complète du compte (accessible aux admins)
