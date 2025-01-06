@@ -1,0 +1,3825 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Your API Title",
+        "description": "Your API Description",
+        "version": "1.0.0"
+    },
+    "security": [
+        {
+            "BearerAuth": []
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "consumes": [
+        "multipart/form-data"
+    ],
+    "paths": {
+        "/api/client/dashboard": {
+            "get": {
+                "summary": "ColisClient",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "DashboardClient"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "get": {
+                "summary": "ListeUtilisateurs",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/user-stats": {
+            "get": {
+                "summary": "StatistiqueUtilisateurs",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/dashboard": {
+            "get": {
+                "summary": "Rles",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/tarifs": {
+            "post": {
+                "summary": "AjouterTarifs",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tarifs"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "sommes": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "zone_livraison_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "sommes": 50,
+                                "description": "Tarif pour la zone centrale",
+                                "zone_livraison_id": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "ListeTarifs",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tarifs"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "sommes": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "zone_livraison_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "sommes": 50,
+                                "description": "Tarif pour la zone centrale",
+                                "zone_livraison_id": 1
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tarifs/{id}": {
+            "get": {
+                "summary": "DetailsTarifs",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tarifs"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "sommes": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "zone_livraison_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "sommes": 50,
+                                "description": "Tarif pour la zone centrale",
+                                "zone_livraison_id": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "SupprimerTarifs",
+                "description": "",
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tarifs"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            },
+            "put": {
+                "summary": "ModificationTarifs",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Tarifs"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "sommes": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "zone_livraison_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "sommes": 503,
+                                "description": "Tarif pour la zone centrale",
+                                "zone_livraison_id": 1
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/livraisons": {
+            "get": {
+                "summary": "ListeLivraison",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Livraison"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            },
+            "post": {
+                "summary": "AjouterLivraison",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Livraison"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "destination": {
+                                        "type": "string"
+                                    },
+                                    "date_de_livraison": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "livreur_id": {
+                                        "type": "integer"
+                                    },
+                                    "gestionnaire_id": {
+                                        "type": "integer"
+                                    },
+                                    "client_id": {
+                                        "type": "integer"
+                                    },
+                                    "gp_id": {
+                                        "type": "integer"
+                                    },
+                                    "colis_id": {
+                                        "type": "integer"
+                                    },
+                                    "zone_livraison_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "titre": "Livraison de colis express",
+                                "description": "Livraison d'un colis fragile à Dakar",
+                                "destination": "Dakar, Sénégal",
+                                "date_de_livraison": "2024-09-22",
+                                "statut": "En attente",
+                                "livreur_id": 5,
+                                "gestionnaire_id": 4,
+                                "client_id": 12,
+                                "gp_id": 7,
+                                "colis_id": 14,
+                                "zone_livraison_id": 1
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/livraisons/{id}": {
+            "put": {
+                "summary": "ModifierLivraison",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Livraison"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "destination": {
+                                        "type": "string"
+                                    },
+                                    "date_de_livraison": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "livreur_id": {
+                                        "type": "integer"
+                                    },
+                                    "gestionnaire_id": {
+                                        "type": "integer"
+                                    },
+                                    "client_id": {
+                                        "type": "integer"
+                                    },
+                                    "gp_id": {
+                                        "type": "integer"
+                                    },
+                                    "colis_id": {
+                                        "type": "integer"
+                                    },
+                                    "zone_livraison_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "titre": "Livraison de colis express hh",
+                                "description": "Livraison d'un colis fragile à Dakar",
+                                "destination": "Dakar, Sénégal",
+                                "date_de_livraison": "2024-09-22",
+                                "statut": "En attente",
+                                "livreur_id": 5,
+                                "gestionnaire_id": 4,
+                                "client_id": 1,
+                                "gp_id": 7,
+                                "colis_id": 5,
+                                "zone_livraison_id": 1
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "SupprimerLivraison",
+                "description": "",
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Livraison"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "destination": {
+                                        "type": "string"
+                                    },
+                                    "date_de_livraison": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "livreur_id": {
+                                        "type": "integer"
+                                    },
+                                    "gestionnaire_id": {
+                                        "type": "integer"
+                                    },
+                                    "client_id": {
+                                        "type": "integer"
+                                    },
+                                    "gp_id": {
+                                        "type": "integer"
+                                    },
+                                    "colis_id": {
+                                        "type": "integer"
+                                    },
+                                    "zone_livraison_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "titre": "Livraison de colis express hh",
+                                "description": "Livraison d'un colis fragile à Dakar",
+                                "destination": "Dakar, Sénégal",
+                                "date_de_livraison": "2024-09-22",
+                                "statut": "En attente",
+                                "livreur_id": 5,
+                                "gestionnaire_id": 4,
+                                "client_id": 1,
+                                "gp_id": 7,
+                                "colis_id": 5,
+                                "zone_livraison_id": 1
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/zones-livraison": {
+            "get": {
+                "summary": "ListeZoone",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Zone livraison"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            },
+            "post": {
+                "summary": "AjoutZone",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Zone livraison"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "libelle": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "arrondissement_id": {
+                                        "type": "integer"
+                                    },
+                                    "arrondissement2_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "libelle": "zone 2",
+                                "description": "zone numero 2",
+                                "arrondissement_id": 2,
+                                "arrondissement2_id": 3
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/zones-livraison/1": {
+            "put": {
+                "summary": "ModificationZone",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Zone livraison"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "libelle": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "arrondissement_id": {
+                                        "type": "integer"
+                                    },
+                                    "arrondissement2_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "libelle": "zone1",
+                                "description": "zone numero 1",
+                                "arrondissement_id": 1,
+                                "arrondissement2_id": 2
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/zones-livraison/{id}": {
+            "get": {
+                "summary": "DetailZone",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Zone livraison"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "SupprimerZone",
+                "description": "",
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Zone livraison"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/reservations/{id}/status": {
+            "post": {
+                "summary": "ModifierReservation",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Reservation"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "annonce_id": {
+                                        "type": "integer"
+                                    },
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "date_reservation": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "annonce_id": 2,
+                                "user_id": 1,
+                                "status": "confirmée",
+                                "date_reservation": "2024-09-22"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reservations/": {
+            "post": {
+                "summary": "CreerReservation",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Reservation"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "annonce_id": {
+                                        "type": "integer"
+                                    },
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "date_reservation": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "annonce_id": 3,
+                                "user_id": 12,
+                                "status": "en attente",
+                                "date_reservation": "2024-09-21"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/client/reservation/{id}": {
+            "put": {
+                "summary": "Details reservation",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Reservation"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "annonce_id": {
+                                        "type": "integer"
+                                    },
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "date_reservation": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "annonce_id": 2,
+                                "user_id": 1,
+                                "status": "en attente",
+                                "date_reservation": "2024-09-21"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reservations": {
+            "get": {
+                "summary": "ListeReservation",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Reservation"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "annonce_id": {
+                                        "type": "integer"
+                                    },
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "date_reservation": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "annonce_id": 2,
+                                "user_id": 1,
+                                "status": "annulée",
+                                "date_reservation": "2024-09-21"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reservations/{id}": {
+            "delete": {
+                "summary": "SupprimerReservation",
+                "description": "",
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Reservation"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/colis": {
+            "get": {
+                "summary": "Liste colis",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "GestionColis"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Ajouter colis",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "GestionColis"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "image_1": {
+                                        "type": "string"
+                                    },
+                                    "image_2": {
+                                        "type": "string"
+                                    },
+                                    "image_3": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    },
+                                    "adresse_expediteur": {
+                                        "type": "string"
+                                    },
+                                    "adresse_destinataire": {
+                                        "type": "string"
+                                    },
+                                    "contact_destinataire": {
+                                        "type": "string"
+                                    },
+                                    "contact_expediteur": {
+                                        "type": "string"
+                                    },
+                                    "date_envoi": {
+                                        "type": "string"
+                                    },
+                                    "date_reception": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "titre": "Colis pour Marli",
+                                "image_1": "https://example.com/images/colis1.jpg",
+                                "image_2": "https://example.com/images/colis1-2.jpg",
+                                "image_3": "https://example.com/images/colis1-3.jpg",
+                                "poids_kg": 2,
+                                "adresse_expediteur": "123 Avenue Bourguiba, Dakar, Sénégal",
+                                "adresse_destinataire": "456 Rue de la Liberté, Dakar, Sénégal",
+                                "contact_destinataire": "+221 77 123 45 67",
+                                "contact_expediteur": "+221 33 765 43 21",
+                                "date_envoi": "2024-09-01",
+                                "date_reception": "2024-09-05",
+                                "statut": "en transit",
+                                "description": "Colis contenant des vêtements et des fournitures scolaires."
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/colis/{id}": {
+            "get": {
+                "summary": "details colis",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "GestionColis"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            },
+            "patch": {
+                "summary": "Modifier colis",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "GestionColis"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "image_1": {
+                                        "type": "string"
+                                    },
+                                    "image_2": {
+                                        "type": "string"
+                                    },
+                                    "image_3": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    },
+                                    "adresse_expediteur": {
+                                        "type": "string"
+                                    },
+                                    "adresse_destinataire": {
+                                        "type": "string"
+                                    },
+                                    "contact_destinataire": {
+                                        "type": "string"
+                                    },
+                                    "contact_expediteur": {
+                                        "type": "string"
+                                    },
+                                    "date_envoi": {
+                                        "type": "string"
+                                    },
+                                    "date_reception": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "titre": "Colis pour Dakar",
+                                "image_1": "https://example.com/images/colis1.jpg",
+                                "image_2": "https://example.com/images/colis1-2.jpg",
+                                "image_3": "https://example.com/images/colis1-3.jpg",
+                                "poids_kg": 6,
+                                "adresse_expediteur": "123 Avenue Bourguiba, Dakar, Sénégal",
+                                "adresse_destinataire": "456 Rue de la Liberté, Dakar, Sénégal",
+                                "contact_destinataire": "+221 77 123 45 67",
+                                "contact_expediteur": "+221 33 765 43 21",
+                                "date_envoi": "2024-09-01",
+                                "date_reception": "2024-09-05",
+                                "statut": "en transit",
+                                "description": "Colis contenant des vêtements et des fournitures scolaires."
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Archiver un colis",
+                "description": "",
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "GestionColis"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "image_1": {
+                                        "type": "string"
+                                    },
+                                    "image_2": {
+                                        "type": "string"
+                                    },
+                                    "image_3": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    },
+                                    "adresse_expediteur": {
+                                        "type": "string"
+                                    },
+                                    "adresse_destinataire": {
+                                        "type": "string"
+                                    },
+                                    "contact_destinataire": {
+                                        "type": "string"
+                                    },
+                                    "contact_expediteur": {
+                                        "type": "string"
+                                    },
+                                    "date_envoi": {
+                                        "type": "string"
+                                    },
+                                    "date_reception": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "user_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "titre": "Colis pour Dakar",
+                                "image_1": "https://example.com/images/colis1.jpg",
+                                "image_2": "https://example.com/images/colis1-2.jpg",
+                                "image_3": "https://example.com/images/colis1-3.jpg",
+                                "poids_kg": 4,
+                                "adresse_expediteur": "123 Avenue Bourguiba, Dakar, Sénégal",
+                                "adresse_destinataire": "456 Rue de la Liberté, Dakar, Sénégal",
+                                "contact_destinataire": "+221 77 123 45 67",
+                                "contact_expediteur": "+221 33 765 43 21",
+                                "date_envoi": "2024-09-01",
+                                "date_reception": "2024-09-05",
+                                "statut": "en transit",
+                                "description": "Colis contenant des vêtements et des fournitures scolaires.",
+                                "user_id": 1
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/annonces/{id}/restore": {
+            "post": {
+                "summary": "DesarchiveAnnonce",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Annonces"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "date_debut_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "date_fin_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "tarif": {
+                                        "type": "integer"
+                                    },
+                                    "condition": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "image": "https://example.com/path/to/image.jpg",
+                                "titre": "Expédition urgente de documents",
+                                "date_debut_reception_colis": "2024-09-16 00:56:48",
+                                "date_fin_reception_colis": "2024-09-16 00:56:48",
+                                "description": "Nous offrons un service d'expédition urgente pour les documents importants. Veuillez nous contacter pour plus de détails.",
+                                "tarif": 11500,
+                                "condition": "Le service est disponible uniquement pour les documents ne dépassant pas 5 kg. Veuillez fournir tous les détails lors de la réservation.",
+                                "statut": "active",
+                                "poids_kg": 50
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/annonces/{id}/archive": {
+            "delete": {
+                "summary": "ArchiveAnnonce",
+                "description": "",
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Annonces"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "date_debut_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "date_fin_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "tarif": {
+                                        "type": "integer"
+                                    },
+                                    "condition": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "image": "https://example.com/path/to/image.jpg",
+                                "titre": "Expédition urgente de documents",
+                                "date_debut_reception_colis": "2024-09-16 00:56:48",
+                                "date_fin_reception_colis": "2024-09-16 00:56:48",
+                                "description": "Nous offrons un service d'expédition urgente pour les documents importants. Veuillez nous contacter pour plus de détails.",
+                                "tarif": 11500,
+                                "condition": "Le service est disponible uniquement pour les documents ne dépassant pas 5 kg. Veuillez fournir tous les détails lors de la réservation.",
+                                "statut": "active",
+                                "poids_kg": 50
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/annonces/{id}": {
+            "put": {
+                "summary": "ModificationAnnonce",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Annonces"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "date_debut_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "date_fin_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "tarif": {
+                                        "type": "integer"
+                                    },
+                                    "condition": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "image": "https://example.com/path/to/image.jpg",
+                                "titre": "Expédition urgente de documents",
+                                "date_debut_reception_colis": "2024-09-16 00:56:48",
+                                "date_fin_reception_colis": "2024-09-16 00:56:48",
+                                "description": "Nous offrons un service d'expédition urgente pour les documents importants. Veuillez nous contacter pour plus de détails.",
+                                "tarif": 11500,
+                                "condition": "Le service est disponible uniquement pour les documents ne dépassant pas 5 kg. Veuillez fournir tous les détails lors de la réservation.",
+                                "statut": "active",
+                                "poids_kg": 50
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "DetailsAnnonce",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Annonces"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "date_debut_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "date_fin_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "tarif": {
+                                        "type": "integer"
+                                    },
+                                    "condition": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "image": "https://example.com/path/to/image.jpg",
+                                "titre": "Expédition urgente de documents",
+                                "date_debut_reception_colis": "2024-09-16 00:56:48",
+                                "date_fin_reception_colis": "2024-09-16 00:56:48",
+                                "description": "Nous offrons un service d'expédition urgente pour les documents importants. Veuillez nous contacter pour plus de détails.",
+                                "tarif": 13500,
+                                "condition": "Le service est disponible uniquement pour les documents ne dépassant pas 5 kg. Veuillez fournir tous les détails lors de la réservation.",
+                                "statut": "active",
+                                "poids_kg": 50
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/CreationAnnonces/": {
+            "post": {
+                "summary": "CreerUneAnnonce",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Annonces"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "date_debut_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "date_fin_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "tarif": {
+                                        "type": "integer"
+                                    },
+                                    "condition": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "image": "https://example.com/path/to/image.jpg",
+                                "titre": "Voyage pour la france",
+                                "date_debut_reception_colis": "2024-10-04 00:56:48",
+                                "date_fin_reception_colis": "2024-10-07 00:56:48",
+                                "description": "Notre prochain voyage pour la france et programmé pour le lundi 07 octobre 2024. Merci de réserver vos Kg avant lundi à 12h00 afain que nous puissions recuperer vos colis pour assurer la livraison dans des bonnes condition",
+                                "tarif": 15000,
+                                "condition": "Le service est disponible  pour les colis (habits, aliments ...) ne dépassant pas 5 kg. Veuillez fournir tous les détails lors de la réservation. Merci",
+                                "statut": "active",
+                                "poids_kg": 60
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ListeAnnonces/": {
+            "get": {
+                "summary": "Liste Annonce",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Annonces"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/GpDisponible": {
+            "get": {
+                "summary": "Liste Annonce Disponible",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Annonces"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "date_debut_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "date_fin_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "tarif": {
+                                        "type": "integer"
+                                    },
+                                    "condition": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "image": "https://example.com/path/to/image.jpg",
+                                "titre": "Expédition urgente de documents",
+                                "date_debut_reception_colis": "2024-09-16 00:56:48",
+                                "date_fin_reception_colis": "2024-09-16 00:56:48",
+                                "description": "Nous offrons un service d'expédition urgente pour les documents importants. Veuillez nous contacter pour plus de détails.",
+                                "tarif": 13500,
+                                "condition": "Le service est disponible uniquement pour les documents ne dépassant pas 5 kg. Veuillez fournir tous les détails lors de la réservation.",
+                                "statut": "active",
+                                "poids_kg": 50
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/detailsAnnoceGP/{id}": {
+            "get": {
+                "summary": "Details Annonce GP Disponible",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Annonces"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "titre": {
+                                        "type": "string"
+                                    },
+                                    "date_debut_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "date_fin_reception_colis": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "tarif": {
+                                        "type": "integer"
+                                    },
+                                    "condition": {
+                                        "type": "string"
+                                    },
+                                    "statut": {
+                                        "type": "string"
+                                    },
+                                    "poids_kg": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "image": "https://example.com/path/to/image.jpg",
+                                "titre": "Expédition urgente de documents",
+                                "date_debut_reception_colis": "2024-09-16 00:56:48",
+                                "date_fin_reception_colis": "2024-09-16 00:56:48",
+                                "description": "Nous offrons un service d'expédition urgente pour les documents importants. Veuillez nous contacter pour plus de détails.",
+                                "tarif": 13500,
+                                "condition": "Le service est disponible uniquement pour les documents ne dépassant pas 5 kg. Veuillez fournir tous les détails lors de la réservation.",
+                                "statut": "active",
+                                "poids_kg": 50
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/account/update": {
+            "put": {
+                "summary": "New Request",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "adress": {
+                                        "type": "string"
+                                    },
+                                    "commune": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "prenom": "Bin abdallah",
+                                "nom": "Drame",
+                                "email": "rahmadeliverysn@gmail.com",
+                                "telephone": "1234567890",
+                                "password": "password123",
+                                "adress": "123 Rue de Paris",
+                                "commune": "Paris"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/profil": {
+            "get": {
+                "summary": "profil",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/account/delete": {
+            "delete": {
+                "summary": "New Request",
+                "description": "",
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/register/client": {
+            "post": {
+                "summary": "RegisterClient",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "adress": {
+                                        "type": "string"
+                                    },
+                                    "commune": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "prenom": "Bin abda",
+                                "nom": "Drame",
+                                "email": "rahmeliverysrn@gmail.com",
+                                "telephone": "1234567890",
+                                "password": "password123",
+                                "adress": "123 Rue de Paris",
+                                "commune": "Paris"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/unarchive": {
+            "post": {
+                "summary": "ProfilUpdateClient",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "adress": {
+                                        "type": "string"
+                                    },
+                                    "commune": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "prenom": "Bin abdallah",
+                                "nom": "Drame",
+                                "telephone": "781860290",
+                                "password": "password123",
+                                "adress": "123 Rue de Paris",
+                                "commune": "Paris, 6"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register/livreur": {
+            "post": {
+                "summary": "RegisterLivreur",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "adress": {
+                                        "type": "string"
+                                    },
+                                    "cni": {
+                                        "type": "string"
+                                    },
+                                    "permis_conduire": {
+                                        "type": "string"
+                                    },
+                                    "date_de_naissance": {
+                                        "type": "string"
+                                    },
+                                    "commune": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "prenom": "Ndeye Mbembé",
+                                "nom": "Cissé",
+                                "email": "ndeyecisse1388@gmail.com",
+                                "telephone": "776123450",
+                                "password": "password123",
+                                "adress": "Dakar, Sénégal",
+                                "cni": "123456784",
+                                "permis_conduire": "A123456783",
+                                "date_de_naissance": "1990-01-01",
+                                "commune": "Dakar"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register/gp": {
+            "post": {
+                "summary": "RegisterGP",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "adress": {
+                                        "type": "string"
+                                    },
+                                    "cni": {
+                                        "type": "string"
+                                    },
+                                    "pays_de_voyage": {
+                                        "type": "string"
+                                    },
+                                    "region_de_voyage": {
+                                        "type": "string"
+                                    },
+                                    "passeport": {
+                                        "type": "string"
+                                    },
+                                    "date_de_naissance": {
+                                        "type": "string"
+                                    },
+                                    "prix_kg": {
+                                        "type": "integer"
+                                    },
+                                    "commune": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "prenom": "Mamadou",
+                                "nom": "Diallo",
+                                "email": "mamadouuu.diallo8@example.com",
+                                "telephone": "+221773456789",
+                                "password": "securePassword123",
+                                "adress": "123 Rue de Dakar",
+                                "cni": "CNI1234567",
+                                "pays_de_voyage": "France",
+                                "region_de_voyage": "Île-de-France",
+                                "passeport": "P123456789",
+                                "date_de_naissance": "1980-05-15",
+                                "prix_kg": 25,
+                                "commune": "Dakar"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/archive": {
+            "post": {
+                "summary": "ArchiveUser",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "adress": {
+                                        "type": "string"
+                                    },
+                                    "cni": {
+                                        "type": "string"
+                                    },
+                                    "pays_de_voyage": {
+                                        "type": "string"
+                                    },
+                                    "region_de_voyage": {
+                                        "type": "string"
+                                    },
+                                    "passeport": {
+                                        "type": "string"
+                                    },
+                                    "date_de_naissance": {
+                                        "type": "string"
+                                    },
+                                    "prix_kg": {
+                                        "type": "integer"
+                                    },
+                                    "commune": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "prenom": "Mamadou",
+                                "nom": "Diallo",
+                                "email": "mamadou.diallo8@example.com",
+                                "telephone": "+221773456789",
+                                "password": "securePassword123",
+                                "adress": "123 Rue de Dakar",
+                                "cni": "CNI1234567",
+                                "pays_de_voyage": "France",
+                                "region_de_voyage": "Île-de-France",
+                                "passeport": "P123456789",
+                                "date_de_naissance": "1980-05-15",
+                                "prix_kg": 25,
+                                "commune": "Dakar"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register/gestionnaire": {
+            "post": {
+                "summary": "RegisterGestionnaire",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "adress": {
+                                        "type": "string"
+                                    },
+                                    "cni": {
+                                        "type": "string"
+                                    },
+                                    "date_de_naissance": {
+                                        "type": "string"
+                                    },
+                                    "commune": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "prenom": "Hapsatou",
+                                "nom": "Thiam",
+                                "email": "thiamhapstou@gmail.com",
+                                "telephone": "+221770000000",
+                                "password": "motdepasse123",
+                                "adress": "Dakar, Sénégal",
+                                "cni": "1234567890123",
+                                "date_de_naissance": "1985-04-23",
+                                "commune": "Mermoz"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register/admin": {
+            "post": {
+                "summary": "RegisterAdmin",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "prenom",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "nom",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "email",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "telephone",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "password",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "adress",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "cni",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "date_de_naissance",
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "commune",
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "adress": {
+                                        "type": "string"
+                                    },
+                                    "cni": {
+                                        "type": "string"
+                                    },
+                                    "date_de_naissance": {
+                                        "type": "string"
+                                    },
+                                    "commune": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "prenom": "Bouna Bin Abdallah",
+                                "nom": "Drame",
+                                "email": "bounabdallah@binabd.com",
+                                "telephone": "+221781860290",
+                                "password": "motdepasse123",
+                                "adress": "Dakar, Sénégal",
+                                "cni": "1234567890123",
+                                "date_de_naissance": "2001-14-12",
+                                "commune": "Parcelles Assainies"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "summary": "Login",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "email": "rahmeliverysn@gmail.com",
+                                "password": "password123"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "get": {
+                "summary": "Logout",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        }
+    }
+}
