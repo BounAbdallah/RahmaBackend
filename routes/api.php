@@ -2,15 +2,19 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\GestionRole;
+
 use App\Http\Controllers\GPDashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardAdmin;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TarifController;
+
 use App\Http\Controllers\ProfilController;
+
 use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\AnnonceGPController;
