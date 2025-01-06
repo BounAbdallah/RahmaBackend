@@ -45,11 +45,7 @@ Route::middleware('api')->group(function () {
 });
 
 // Routes protégées par auth:sanctum
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-});
+
 
 // Routes protégées par auth:api
 Route::middleware('auth:api')->group(function () {
