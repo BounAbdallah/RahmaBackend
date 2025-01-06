@@ -1,27 +1,31 @@
 
 <?php
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\GestionRole;
-use App\Http\Controllers\GPDashboard;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardAdmin;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\TarifController;
-use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\AnnonceGPController;
-use App\Http\Controllers\Api\ColisController;
-use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\ColisController;
+use App\Http\Controllers\Api\NotationController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\DashboardAdmin;
 use App\Http\Controllers\DashboardGPController;
+use App\Http\Controllers\GestionRole;
+use App\Http\Controllers\GPDashboard;
+use App\Http\Controllers\LivraisonController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StatistiqueController;
-use App\Http\Controllers\Api\NotationController;
-use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\TarifController;
 use App\Http\Controllers\UserMangementController;
 use App\Http\Controllers\ZoneLivraisonController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+
 
 // Routes publiques
 Route::middleware('api')->group(function () {
@@ -55,6 +59,23 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/profil/modifier', [ProfilController::class, 'modifierProfil']); // Modifier le profil
 
 });
+
+// Route pour activer ou desactiver un compte
+Route::middleware(['auth:api', 'role:Admin'])->group(function () {
+    Route::put('/users/{id}/toggle-etat', [AuthController::class, 'toggleEtat']);
+    Route::put('/users/{id}/activer', [AuthController::class, 'desarchiverUser']);
+
+});
+
+// Route pour activer ou desactiver un compte
+// Route::middleware(['auth:api', 'role:admin', 'role:Gestionnaire'])->group(function () {
+//     Route::get('/commandes', [Controller::class, 'index']);
+
+// });
+Route::get('/commandes', [CommandeController::class, 'index']);
+Route::get('/commandes/{id}', [CommandeController::class, 'show']);
+
+
 
 // Routes pour la suppression complète du compte (accessible aux admins)
 Route::middleware(['auth:api', 'role:Admin'])->group(function () {
@@ -126,6 +147,7 @@ Route::apiResource('tarifs', TarifController::class);
 Route::middleware(['auth:api', 'role:Admin'])->group(function () {
     Route::post('/tarifs', [TarifController::class, 'store']);
 });
+
 
 // Routes pour le dashboard admin
 Route::middleware(['auth:api', 'role:Admin'])->group(function () {
