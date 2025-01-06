@@ -1,29 +1,30 @@
 
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AnnonceController;
-use App\Http\Controllers\AnnonceGPController;
-use App\Http\Controllers\Api\ClientController;
-use App\Http\Controllers\Api\ColisController;
-use App\Http\Controllers\Api\NotationController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CommandeController;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\DashboardAdmin;
-use App\Http\Controllers\DashboardGPController;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use App\Http\Controllers\GestionRole;
 use App\Http\Controllers\GPDashboard;
-use App\Http\Controllers\LivraisonController;
-use App\Http\Controllers\NotificationController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardAdmin;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TarifController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\AnnonceController;
+use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\AnnonceGPController;
+use App\Http\Controllers\Api\ColisController;
+use App\Http\Controllers\LivraisonController;
+use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\CompteUserController;
+use App\Http\Controllers\DashboardGPController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StatistiqueController;
-use App\Http\Controllers\TarifController;
+use App\Http\Controllers\Api\NotationController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserMangementController;
 use App\Http\Controllers\ZoneLivraisonController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 
 
@@ -36,6 +37,7 @@ Route::middleware('api')->group(function () {
     Route::post('/register/chauffeur', [AuthController::class, 'registerChauffeur'])->name('register.chauffeur');
     Route::post('/register/livreur', [AuthController::class, 'registerLivreur'])->name('register.livreur');
     Route::post('/login', [AuthController::class, 'login']);
+
 });
 
 // Routes protégées par auth:sanctum
@@ -80,6 +82,16 @@ Route::get('/commandes/{id}', [CommandeController::class, 'show']);
 // Routes pour la suppression complète du compte (accessible aux admins)
 Route::middleware(['auth:api', 'role:Admin'])->group(function () {
     Route::delete('/user/delete', [AuthController::class, 'deleteAccount']);
+    Route::prefix('comptes')->group(function () {
+        Route::get('', [CompteUserController::class, 'index']); // Liste des comptes
+        Route::post('', [CompteUserController::class, 'store']); // Créer un compte
+        Route::get('{compteUser}', [CompteUserController::class, 'show']); // Afficher un compte
+        Route::put('{compteUser}', [CompteUserController::class, 'update']); // Mettre à jour un compte
+        Route::delete('{compteUser}', [CompteUserController::class, 'destroy']); // Soft delete
+        Route::post('{id}/restore', [CompteUserController::class, 'restore']); // Restaurer un compte
+        Route::delete('{id}/force-delete', [CompteUserController::class, 'forceDelete']); // Suppression définitive
+    });
+
 });
 
 // Routes pour les colis
