@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\UserRegisteredMail;
+use App\Mail\UserRegisteredNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -40,6 +41,7 @@ class AuthController extends Controller
             'email' => $request->input('email'),
             'telephone' => $request->input('telephone'),
             'password' => Hash::make($request->input('password')),
+            'nationalite' => $request->input('nationalite'),
             'adress' => $request->input('adress'),
             'commune' => $request->input('commune'),
             'photo_profil' => $imagePath, // Ajout du chemin de l'image dans les données utilisateur
@@ -50,8 +52,20 @@ class AuthController extends Controller
         $user = User::create($userData);
         $user->assignRole($role);
 
-        // Envoi de l'e-mail de confirmation
+        // Envoi de l'e-mail de confirmation à l'utilisateur
         Mail::to($user->email)->send(new UserRegisteredMail($user));
+
+        // Envoi de l'e-mail à l'administrateur et au gestionnaire
+        $admins = User::role('admin')->get(); // Récupérer tous les admins
+        $gestionnaires = User::role('gestionnaire')->get(); // Récupérer tous les gestionnaires
+
+        foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new UserRegisteredNotification($user));
+        }
+
+        foreach ($gestionnaires as $gestionnaire) {
+            Mail::to($gestionnaire->email)->send(new UserRegisteredNotification($user));
+        }
 
         return $user;
     }
@@ -68,11 +82,8 @@ class AuthController extends Controller
     {
         $additionalFields = [
             'cni' => $request->input('cni'),
-            'pays_de_voyage' => $request->input('pays_de_voyage'),
-            'region_de_voyage' => $request->input('region_de_voyage'),
             'passeport' => $request->input('passeport'),
             'date_de_naissance' => $request->input('date_de_naissance'),
-            'prix_kg' => $request->input('prix_kg'),
         ];
         $this->createUser($request, $additionalFields, 'GP');
         return response()->json(['message' => 'GP registered successfully'], 201);
@@ -117,7 +128,6 @@ class AuthController extends Controller
             'date_de_naissance' => $request->input('date_de_naissance'),
         ];
         $this->createUser($request, $additionalFields, 'gestionnaire');
-
         return response()->json(['message' => 'Gestionnaire registered successfully'], 201);
     }
 
@@ -148,7 +158,13 @@ class AuthController extends Controller
             "expires_in" => env("JWT_TTL") * 60 . ' seconds'
         ]);
     }
+    public function logout(Request $request)
+    {
+        // Si vous utilisez Laravel Sanctum ou Passport
+        Auth::guard('api')->logout();
 
+        return response()->json(['message' => 'Déconnexion réussie'], 200);
+    }
     // Modification du compte utilisateur avec gestion d'image
     public function updateAccount(Request $request)
     {
@@ -218,23 +234,15 @@ class AuthController extends Controller
         return response()->json(['message' => 'Account unarchived successfully']);
     }
 
-    // Suppression complète du compte utilisateur (par un admin)
-    public function deleteAccount(Request $request)
+    // Suppression du compte utilisateur
+    public function deleteAccount()
     {
+        // Récupérer l'utilisateur authentifié
         $user = Auth::user();
 
-        if ($user->hasRole('admin')) {
-            $user->forceDelete();
-            return response()->json(['message' => 'Account deleted permanently']);
-        }
+        // Supprimer l'utilisateur
+        $user->delete();
 
-        return response()->json(['message' => 'Unauthorized'], 403);
-    }
-
-    // Déconnexion utilisateur
-    public function logout()
-    {
-        auth()->logout();
-        return response()->json(['message' => 'Déconnexion réussie']);
+        return response()->json(['message' => 'Account deleted successfully']);
     }
 }

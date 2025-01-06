@@ -19,14 +19,15 @@ class Reservation extends Model
         return $this->belongsTo(Annonce::class);
     }
 
-    // Relation : Une réservation peut avoir plusieurs colis
+    // Relation : Une réservation appartient à un utilisateur (client)
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    // Relation : Une réservation appartient à un utilisateur  colis
     public function colis()
     {
-        return $this->hasMany(Colis::class);
+        return $this->belongsTo(Colis::class);
     }
 }

@@ -8,6 +8,8 @@ use App\Models\Annonce;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StatutReservationChange;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DashboardGPController extends Controller
@@ -57,16 +59,15 @@ class DashboardGPController extends Controller
         // Préparer les détails des réservations et des colis
         $reservationsDetails = $reservations->map(function ($reservation) {
             return [
-                'reservation_id' => $reservation,
-          'colis' => $reservation->colis->map(function ($colis) {
-              return response([
-                'colis_id' => $colis->id,
-                'description' => $colis->description,
-                'poids' => $colis->poids,
-                'dimensions' => $colis->dimensions,
-                'status' => $colis->status,
-              ]);
-          }),
+                'reservation_id' => $reservation->id,
+                'user' => $reservation->user->nom ?? 'Utilisateur inconnu',
+                'colis' => [
+                    'colis_id' => $reservation->colis->id,
+                    'description' => $reservation->colis->description,
+                    'poids' => $reservation->colis->poids,
+                    'dimensions' => $reservation->colis->dimensions,
+                    'status' => $reservation->colis->status,
+                ],
             ];
         });
 
@@ -74,9 +75,9 @@ class DashboardGPController extends Controller
             'annonce' => $annonce,
             'nombre_reservations' => $nombreReservations,
             'reservations_details' => $reservationsDetails,
-            'colis' => $reservations->pluck('colis')
         ], 200);
     }
+
 
     // Méthode pour afficher les colis liés à une annonce spécifique
     public function colisParAnnonce($annonceId)
@@ -150,15 +151,18 @@ class DashboardGPController extends Controller
     public function changerStatutReservation($id, Request $request)
     {
         $request->validate([
-            'status' => 'required|string', // Assurez-vous que le statut est valide
+            'status' => 'required|string',
         ]);
 
         try {
-            $reservation = Reservation::findOrFail($id); // Trouver la réservation par ID
-            $reservation->status = $request->input('status'); // Mettre à jour le statut
-            $reservation->save(); // Enregistrer les changements
+            $reservation = Reservation::findOrFail($id);
+            $reservation->status = $request->input('status');
+            $reservation->save();
 
-            return response()->json(['message' => 'Statut mis à jour avec succès.'], 200);
+            // Envoyer un email à l'utilisateur ayant créé la réservation
+            Mail::to($reservation->user->email)->send(new StatutReservationChange($reservation, $reservation->status));
+
+            return response()->json(['message' => 'Statut mis à jour avec succès et email envoyé.'], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Réservation non trouvée.'], 404);
         } catch (\Exception $e) {

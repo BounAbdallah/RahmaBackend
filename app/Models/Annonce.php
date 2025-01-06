@@ -10,15 +10,17 @@ class Annonce extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
+    // Relation : Une annonce est créée par un utilisateur
     public function user()
     {
         return $this->belongsTo(User::class, 'createur');
     }
 
-    public function colis()
-{
-    return $this->hasMany(Colis::class);
-}
+    // Relation : Une annonce peut avoir plusieurs réservations
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
