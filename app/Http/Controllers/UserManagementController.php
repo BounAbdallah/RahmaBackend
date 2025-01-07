@@ -1,11 +1,12 @@
 <?php
 
-use App\Models\User;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 
-class AdminUserController extends Controller
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+class UserManagementController  extends Controller
 {
     // Lister tous les utilisateurs avec leur rôle
     public function listUsers(Request $request)
@@ -18,21 +19,77 @@ class AdminUserController extends Controller
         }
 
         return response()->json($users->get());
+    }   // Lister tous les utilisateurs d'un rôle spécifique
+    public function listUsersByRole($role)
+    {
+        $users = User::role($role)->get();
+        return response()->json($users);
     }
+
+    // Liste des chauffeurs
+    public function listChauffeurs()
+    {
+        return $this->listUsersByRole('chauffeur');
+    }
+    public function listClients()
+    {
+        return $this->listUsersByRole('client');
+    }
+
+    // Liste des livreurs
+    public function listLivreurs()
+    {
+        return $this->listUsersByRole('livreur');
+    }
+
+    // Liste des GP
+    public function listGP()
+    {
+        return $this->listUsersByRole('gp');
+    }
+
+    // Liste des gestionnaires
+    public function listGestionnaires()
+    {
+        return $this->listUsersByRole('gestionnaire');
+    }
+
+    // Liste des administrateurs
+    public function listAdmins()
+    {
+        return $this->listUsersByRole('admin');
+    }
+
+
+    // Afficher les détails d'un utilisateur spécifique
+public function showUserDetails($id)
+{
+    // Récupérer l'utilisateur avec ses rôles
+    $user = User::with('roles')->find($id);
+
+    // Vérifier si l'utilisateur existe
+    if (!$user) {
+        return response()->json([
+            'message' => 'Utilisateur non trouvé',
+        ], 404);
+    }
+
+    // Retourner les détails de l'utilisateur
+    return response()->json($user);
+}
+
 
     // Obtenir les statistiques des utilisateurs
     public function userStatistics()
     {
-        $totalUsers = User::count();
-        $totalAdmins = User::role('admin')->count();
-        $totalChauffeurs = User::role('chauffeur')->count();
-        $totalClients = User::role('client')->count();
-
         return response()->json([
-            'total_users' => $totalUsers,
-            'total_admins' => $totalAdmins,
-            'total_chauffeurs' => $totalChauffeurs,
-            'total_clients' => $totalClients,
+            'total_users' => User::count(),
+            'total_admins' => User::role('admin')->count(),
+            'total_chauffeurs' => User::role('chauffeur')->count(),
+            'total_client' => User::role('client')->count(),
+            'total_livreurs' => User::role('livreur')->count(),
+            'total_gps' => User::role('gp')->count(),
+            'total_gestionnaires' => User::role('gestionnaire')->count(),
         ]);
     }
 

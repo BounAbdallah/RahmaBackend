@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Annonce;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Reservation; // Assurez-vous d'importer le modèle Reservation
+use App\Models\Reservation; 
 
 class AnnonceGPController extends Controller
 {
