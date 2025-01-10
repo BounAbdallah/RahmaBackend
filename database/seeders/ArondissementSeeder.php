@@ -36,7 +36,7 @@ class ArondissementSeeder extends Seeder
             $departementId = 1; // Assure-toi que l'ID correspond à celui de ton département de Dakar
 
             // Créer l'arrondissement
-            Arondissement::create([
+            Arondissement::create([  // Utilisez Arrondissement ici
                 'libelle' => $libelle,
                 'description' => $data['description'], // Ajoute la description ici
                 'commune' => json_encode($data['communes']), // Stocke les communes sous forme de JSON
