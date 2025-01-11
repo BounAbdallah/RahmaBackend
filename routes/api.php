@@ -159,6 +159,15 @@ Route::get('/liste-annonces', [AnnonceManagementController::class, 'listeAnnonce
 
 Route::get('/details-annonce/{id}', [AnnonceManagementController::class, 'showAnnonceDetails']);
 
+
+
+// Routes pour la gestion des livraisons
+
+
+Route::apiResource('livraisons', LivraisonController::class);
+Route::put('/modification-livraison/{id}',[ LivraisonController::class, 'update']);
+
+
 });
 
 // Routes spécifiques pour le rôle GP
@@ -213,7 +222,6 @@ Route::middleware(['auth:api', 'role:Client'])->group(function () {
     Route::put('/client/reservation/{id}', [ClientController::class, 'updateReservation']);
     Route::put('/client/livraison/{id}', [ClientController::class, 'updateLivraison']);
     Route::get('/historique/colis/', [ColisController::class, 'historique']);
-    Route::apiResource('livraisons', LivraisonController::class);
 });
 
 // Routes pour les commandes

@@ -14,7 +14,7 @@ class LivraisonController extends Controller
      */
     public function index()
     {
-        $livraisons = Livraison::all();
+        $livraisons = Livraison::with(['commande', 'livreur', 'gestionnaire', 'client', 'gp', 'zoneLivraison'])->get();
         return response()->json($livraisons);
     }
 
@@ -34,6 +34,7 @@ class LivraisonController extends Controller
      */
     public function show(Livraison $livraison)
     {
+        $livraison->load(['commande', 'livreur', 'gestionnaire', 'client', 'gp', 'zoneLivraison']);
         return response()->json($livraison);
     }
 

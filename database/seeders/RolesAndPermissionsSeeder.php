@@ -14,6 +14,8 @@ class RolesAndPermissionsSeeder extends Seeder
             // Permissions générales
             'gérer les utilisateurs',
             'creer une livraison',
+            'voir la liste des livraisons',
+            'voir le details des livraisons',
             'attribuer des rôles',
             'créer des annonces',
             'attribuer des livraisons',
@@ -137,6 +139,10 @@ class RolesAndPermissionsSeeder extends Seeder
                 'Modifier son profil',
                 'voir l\'historique des colis',
                 'voir l\'historique des réservations',
+
+            'voir la liste des livraisons',
+            'voir le details des livraisons',
+            'modifier une livraison',
             ],
             'Chauffeur' => [
                 'créer des annonces',

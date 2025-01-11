@@ -42,6 +42,10 @@ class Livraison extends Model
     {
         return $this->belongsTo(ZoneLivraison::class, 'zone_livraison_id');
     }
+    public function commande()
+    {
+        return $this->belongsTo(Commande::class);
+    }
 
 
     public function paiement()
