@@ -15,7 +15,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'gérer les utilisateurs',
             'creer une livraison',
             'voir la liste des livraisons',
-            'voir le details des livraisons',
+            'voir le details des annonces',
             'attribuer des rôles',
             'créer des annonces',
             'attribuer des livraisons',
@@ -122,6 +122,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'Afficher son profil',
                 'Modifier son profil',
                 'voir l\'historique des réservations',
+            'voir le details des annonces',
+'voir les détails des réservations',
             ],
 
             'Gestionnaire' => [
@@ -139,6 +141,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'Modifier son profil',
                 'voir l\'historique des colis',
                 'voir l\'historique des réservations',
+            'voir le details des annonces',
+'voir les détails des réservations',
 
             'voir la liste des livraisons',
             'voir le details des livraisons',
@@ -183,6 +187,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'Afficher son profil',
                 'Modifier son profil',
                 'voir l\'historique des réservations',
+            'voir le details des annonces',
+'voir les détails des réservations',
             ],
             'Client' => [
                 'réserver des KG',
@@ -210,6 +216,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'Modifier son profil',
                 'voir l\'historique des colis',
                 'voir l\'historique des réservations',
+            'voir le details des annonces',
+'voir les détails des réservations',
             ],
         ];
 

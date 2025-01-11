@@ -165,7 +165,7 @@ Route::get('/details-annonce/{id}', [AnnonceManagementController::class, 'showAn
 
 
 Route::apiResource('livraisons', LivraisonController::class);
-Route::put('/modification-livraison/{id}',[ LivraisonController::class, 'update']);
+
 
 
 });
