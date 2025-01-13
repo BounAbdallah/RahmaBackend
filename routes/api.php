@@ -127,7 +127,7 @@ Route::middleware(['auth:api', 'role:Admin'])->group(function () {
 // Routes spécifiques pour le rôle Gestionnaire
 Route::middleware(['auth:api', 'role:Gestionnaire'])->group(function () {
     // Routes pour les annonces
-    Route::get('/annonces', [AnnonceController::class, 'index']);
+    Route::get('/annonces', [AnnonceController::class, 'indexGestionnaire']);
     Route::post('/annonces', [AnnonceController::class, 'store']);
     Route::get('/annonces/{id}', [AnnonceController::class, 'show']);
     Route::put('/annonces/{id}', [AnnonceController::class, 'update']);
@@ -227,7 +227,12 @@ Route::middleware(['auth:api', 'role:Client'])->group(function () {
 // Routes pour les commandes
 Route::get('/commandes', [CommandeController::class, 'index']);
 Route::get('/commandes/{id}', [CommandeController::class, 'show']);
+Route::post('/commandes', [CommandeController::class, 'store']);
+Route::put('/commandes/{id}', [CommandeController::class, 'update']); 
+
 
 // Routes pour les notations
 Route::apiResource('notations', NotationController::class);
 Route::get('/annonces/{annonceId}/colis', [ReservationController::class, 'getColisByAnnonce']);
+
+

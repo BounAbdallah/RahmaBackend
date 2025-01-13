@@ -21,6 +21,12 @@ class AnnonceController extends Controller
         return response()->json($annonces);
     }
 
+    public function indexGestionnaire()
+    {
+        $annonces = Annonce::all();
+        return response()->json($annonces);
+    }
+
     // Affichage des annonces disponibles
     public function annonceDisponible()
     {
